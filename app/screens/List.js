@@ -1,14 +1,23 @@
 import { View, StyleSheet, TextInput, Button, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
-
+import { addDoc, collection } from 'firebase/firestore';
+import { FIRESTORE_DB } from '../../firebaseConfig';
 
 const List = () => {
 	const [todos, setTodos] = useState([]);
 	const [todo, setTodo] = useState('');
 
 	const addTodo = async () => {
-		// TODO
-		alert(todo);
+		try {
+			const docRef = await addDoc(collection(FIRESTORE_DB, 'todos'), {
+				title: todo,
+				done: false
+			});
+			setTodo('');
+			console.log('Document written with ID: ', docRef.id);
+		} catch (e) {
+			console.error('Error adding document: ', e);
+		}
 	};
 
 	return (
