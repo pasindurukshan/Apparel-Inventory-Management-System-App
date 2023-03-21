@@ -8,7 +8,7 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen name="My Todos" component={List} />
+				<Stack.Screen name="My Todos" component={List} options={{headerShown: false}}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
