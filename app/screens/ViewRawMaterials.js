@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
@@ -15,8 +15,6 @@ const ViewRawMaterials = ({navigation}) => {
             next: (snapshot) => {
                 const info = [];
                 snapshot.docs.forEach((doc) => {
-                    console.log(doc.data());
-
                     info.push({
                         id: doc.id,
                         ...doc.data()
@@ -32,7 +30,11 @@ const ViewRawMaterials = ({navigation}) => {
     }, []);
 
     const renderRawItem = ({ item }) => (
-        <TouchableOpacity>
+        <TouchableOpacity 
+            onPress={() => {
+                navigation.navigate("Updaterawmaterials", { item })
+            }}
+        >
             <View style={styles.rawItemContainer}>
                 <Text style={styles.listItem}>{item.materialName}</Text>
                 <Text style={styles.listItem}>{item.materialPrice}</Text>
@@ -64,7 +66,7 @@ const ViewRawMaterials = ({navigation}) => {
 
 
     return (
-        <View>
+        <SafeAreaView>
             {rawinfo.length > 0 && (
                 <ScrollView style={styles.container}>
                     <FlatList
@@ -74,7 +76,7 @@ const ViewRawMaterials = ({navigation}) => {
                     />
                 </ScrollView>                
             )}
-        </View>
+        </SafeAreaView>
     )
 }
 
