@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 
-const InsertRawMaterial = () => {
+const InsertRawMaterial = ({navigation}) => {
     const [materialid, setMaterialid] = useState('');
 	const [material, setMaterial] = useState('');
 	const [supplier, setSupplier] = useState('');
@@ -21,7 +21,7 @@ const InsertRawMaterial = () => {
 				materialId: materialid,
 				materialName: material,
 				supplierName: supplier,
-				materialPrice:price,
+				materialPrice: price,
 				materialQuantity: quantity
 			});
 			setMaterialid('');
@@ -37,6 +37,12 @@ const InsertRawMaterial = () => {
 
     return (
 		<View style={styles.container}>
+			<TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
+                <View style={styles.button}>
+                    <Text style={styles.text} >Back</Text>
+                </View>
+            </TouchableOpacity>
+
 		<View>
 			<TextInput
 				style={styles.input}
@@ -73,13 +79,11 @@ const InsertRawMaterial = () => {
 		</View>	
 
 		<View style={styles.btncontainer}>
-			<TouchableOpacity>
-				<Button
-					style={styles.button} 
-					onPress={addMaterial} 
-					title="Add Material" 
-					disabled={isFormNotFilled()} 
-				/>
+			<TouchableOpacity
+				onPress={addMaterial} 
+				disabled={isFormNotFilled()}	
+			>
+				<Text style={styles.btn}>Add Material</Text>
 			</TouchableOpacity>
 		</View>
 		
@@ -89,7 +93,7 @@ const InsertRawMaterial = () => {
 
 const styles = StyleSheet.create({
 	container: {
-        marginTop: 80,
+        marginTop: 50,
 		justifyContent: 'center',
     },
     form : {
@@ -111,8 +115,26 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		marginLeft: 40,
 		justifyContent: 'center',
+		alignItems: 'center',
 		width: '80%',
-	}
+		backgroundColor: 'purple',
+		height: 50,
+		borderRadius: 10
+	},
+	btn : {
+		color: 'white',
+		fontSize: 17
+	},
+	button: {
+        backgroundColor: 'purple',
+        width: 60,
+        height: 60,
+        borderRadius: 50
+    },
+    text : {
+        color: 'white',
+		padding: 20
+    }
 });
 
 
