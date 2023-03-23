@@ -56,7 +56,7 @@ const LAddNewPacking = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
+            <TouchableOpacity onPress={() => navigation.navigate('LViewPackings')}>
                 <View style={styles.button}>
                     <Text style={styles.text} >Back</Text>
                 </View>
@@ -119,12 +119,6 @@ const LAddNewPacking = ({ navigation }) => {
                     disabled={isFormNotFilled()}
                 >
                     <Text style={styles.btn}>Add Packing</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={clear}
-                // disabled={isFormNotFilled()}
-                >
-                    <Text style={styles.btn}>Clear</Text>
                 </TouchableOpacity>
             </View>
 
