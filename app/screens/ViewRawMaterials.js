@@ -1,12 +1,13 @@
 import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import InsertRawMaterial from '../screens/InsertRawMaterial';
 
-const ViewRawMaterials = ({navigation}) => {
 
+const ViewRawMaterials = ({navigation}) => {
     const [rawinfo, setrawInfo] = useState([]);
+    const [selectedRaw, setSelectedRaw] = useState(null);
 
     useEffect(() => {
         const rawRef = collection(FIRESTORE_DB, 'rawmaterials');
@@ -30,19 +31,20 @@ const ViewRawMaterials = ({navigation}) => {
     }, []);
 
     const renderRawItem = ({ item }) => (
-        <TouchableOpacity 
-            onPress={() => {
-                navigation.navigate("Updaterawmaterials", { item })
-            }}
-        >
-            <View style={styles.rawItemContainer}>
-                <Text style={styles.listItem}>{item.materialName}</Text>
-                <Text style={styles.listItem}>{item.materialPrice}</Text>
-                <Text style={styles.listItem}>{item.materialQuantity}</Text>
-                <Text style={styles.listItem}>{item.supplierName}</Text>
-            </View>
-        </TouchableOpacity>
-    );    
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Updaterawmaterials", { item });
+        }}
+      >
+          <View style={styles.rawItemContainer}>
+            <Text style={styles.listItem}>{item.materialName}</Text>
+            <Text style={styles.listItem}>{item.materialPrice}</Text>
+            <Text style={styles.listItem}>{item.materialQuantity}</Text>
+            <Text style={styles.listItem}>{item.supplierName}</Text>
+          </View>
+      </TouchableOpacity>
+    );
+        
 
 
     const renderItemList = ({ item }) => (        
@@ -64,7 +66,6 @@ const ViewRawMaterials = ({navigation}) => {
     }, {}));
 
 
-
     return (
         <SafeAreaView>
             {rawinfo.length > 0 && (
@@ -78,6 +79,8 @@ const ViewRawMaterials = ({navigation}) => {
             )}
         </SafeAreaView>
     )
+  
+      
 }
 
 const styles = StyleSheet.create({

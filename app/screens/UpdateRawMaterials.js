@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import { doc, updateDoc } from 'firebase/firestore';
+import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, Alert  } from 'react-native';
+import { doc, updateDoc, deleteDoc  } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 
 const UpdateRawMaterials = ({ navigation, route }) => {
@@ -23,7 +23,37 @@ const UpdateRawMaterials = ({ navigation, route }) => {
     });
   };
 
+  const deleteItem = async () => {
+    try {
+      const rawRef = doc(FIRESTORE_DB, "rawmaterials", item.id);
+      await deleteDoc(rawRef);
+      navigation.navigate('Viewrawmaterials');
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
 
+  const handleDeleteButtonPress = () => {
+    Alert.alert(
+      "Delete Item",
+      "Are you sure you want to delete this item?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+              deleteItem()
+              navigation.navigate('Viewrawmaterials')
+            },
+          style: "destructive"
+        }
+      ]
+    );
+  };
+  // navigation.navigate('Viewrawmaterials')
   return (
     
     <View style={styles.container}>
@@ -76,6 +106,15 @@ const UpdateRawMaterials = ({ navigation, route }) => {
             <Text style={styles.btn}>Update</Text>
         </TouchableOpacity>
         </View>
+        <View style={styles.btncontainer}>
+        <TouchableOpacity
+            onPress={() => {
+              handleDeleteButtonPress();
+            }}
+        >
+            <Text style={styles.btn}>Delete Item</Text>
+        </TouchableOpacity>
+        </View>
     </View>
   );
 
@@ -83,8 +122,8 @@ const UpdateRawMaterials = ({ navigation, route }) => {
 
   const styles = StyleSheet.create({
     container: {
-        marginTop: 150,
-		justifyContent: 'center',
+        marginTop: 120,
+		    justifyContent: 'center',
     },
     form : {
         marginVertical: 20,
