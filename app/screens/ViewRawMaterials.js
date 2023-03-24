@@ -4,7 +4,7 @@ import { addDoc, collection, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import InsertRawMaterial from '../screens/InsertRawMaterial';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { Ionicons } from '@expo/vector-icons';
 
 const ViewRawMaterials = ({navigation}) => {
     const [rawinfo, setrawInfo] = useState([]);
@@ -99,10 +99,14 @@ const ViewRawMaterials = ({navigation}) => {
                     />
                 </ScrollView>                
             )}
+            <TouchableOpacity 
+                style={styles.addButton}
+                onPress={() => navigation.navigate("Addrawmaterials")}
+            >
+                <Ionicons name="add-circle-outline" size={70} color="white" />
+            </TouchableOpacity>
         </LinearGradient>
-    )
-  
-      
+    )      
 }
 
 const styles = StyleSheet.create({
@@ -161,6 +165,12 @@ const styles = StyleSheet.create({
         marginTop : 10,
         color :'white',
         fontSize: 50,
+    },
+    addButton : {
+        width: 70,
+        height: 70,
+        marginLeft: 250,
+        marginBottom: 30,
     }
 });
 
