@@ -1,6 +1,7 @@
+parametes =>
+
 material id
 material name
 supplier Name
 price
 quantity
-

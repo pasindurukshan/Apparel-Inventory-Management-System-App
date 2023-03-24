@@ -16,7 +16,6 @@ export default function App() {
 				<Stack.Screen name="PMUpdateFactoryFormScreen" component={PMUpdateFactoryForm} options={{ headerShown: false }} />
 				<Stack.Screen name="PMViewFactoryFormScreen" component={PMViewFactoryForm} options={{ headerShown: false }} />
 				<Stack.Screen name="PMCreateFactoryFormScreen" component={PMCreateFactoryForm} options={{ headerShown: false }} />
-
 				<Stack.Screen name="Addrawmaterials" component={InsertRawMaterial} options={{headerShown: false}}/>
 				<Stack.Screen name="Viewrawmaterials" component={ViewRawMaterials} options={{headerShown: false}}/>
 				<Stack.Screen name="Updaterawmaterials" component={UpdateRawMaterials} options={{headerShown: false}}/>
