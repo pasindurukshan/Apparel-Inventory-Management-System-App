@@ -1,7 +1,9 @@
-import { View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
 import React, { useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const InsertRawMaterial = ({navigation}) => {
     const [materialid, setMaterialid] = useState('');
@@ -9,11 +11,25 @@ const InsertRawMaterial = ({navigation}) => {
 	const [supplier, setSupplier] = useState('');
 	const [price, setPrice] = useState('');
 	const [quantity, setQuantity] = useState('');
+	const [photo, setPhoto] = useState(null);
 
 	const isFormNotFilled = () => {
 		return materialid.trim() === '' || material.trim() === '' || supplier.trim() === '' || price.trim() === '' || quantity.trim() === '';
-	}
-	  
+	}	  
+
+	const handleTakePhoto = async () => {
+		let result = await ImagePicker.launchCameraAsync({
+		  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+		  allowsEditing: true,
+		  aspect: [4, 3],
+		  quality: 1,
+		});
+	
+		if (!result.cancelled) {
+		  setPhoto(result.uri);
+		}
+	};
+
 
     const addMaterial = async () => {
 		try {
@@ -22,13 +38,15 @@ const InsertRawMaterial = ({navigation}) => {
 				materialName: material,
 				supplierName: supplier,
 				materialPrice: price,
-				materialQuantity: quantity
+				materialQuantity: quantity,
+				image: photo
 			});
 			setMaterialid('');
 			setMaterial('');
 			setSupplier('');
 			setPrice('');
 			setQuantity('');
+			setPhoto(null);
 			console.log('Document written with ID: ', docRef.id);
 		} catch (e) {
 			console.error('Error adding document: ', e);
@@ -42,7 +60,7 @@ const InsertRawMaterial = ({navigation}) => {
                     <Text style={styles.text} >Back</Text>
                 </View>
             </TouchableOpacity>
-
+		<ScrollView>
 		<View>
 			<Text style={styles.header}>Material ID</Text>
 			<TextInput
@@ -84,18 +102,35 @@ const InsertRawMaterial = ({navigation}) => {
 				keyboardType="numeric"
 				onChangeText={(text) => setQuantity(text)}
 				value={quantity}
-			/>										
+			/>	
+
+			<View style={styles.imgBtn}>
+				<TouchableOpacity
+					onPress={handleTakePhoto}
+				>
+					<Text style={styles.btn}>Take a photo</Text>
+				</TouchableOpacity>
+			</View>
+
+			{photo && (
+				<Image
+				source={{ uri: photo }}
+				style={styles.img}
+				/>
+			)}									
 		</View>	
 
 		<View style={styles.btncontainer}>
-			<TouchableOpacity
-				onPress={addMaterial} 
-				disabled={isFormNotFilled()}	
-			>
-				<Text style={styles.btn}>Add Material</Text>
-			</TouchableOpacity>
+			{photo && (
+				<TouchableOpacity
+					onPress={addMaterial} 
+					disabled={isFormNotFilled()}	
+				>
+					<Text style={styles.btn}>Add Material</Text>
+				</TouchableOpacity>
+			)}
 		</View>
-		
+		</ScrollView>
 	</View>
     )
 }
@@ -148,6 +183,22 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginLeft: 40,
 		fontSize: 20
+	},
+	imgBtn : {
+		backgroundColor: 'purple',
+		marginTop: 10,
+		marginLeft: 40,
+		width: 150,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10
+	},
+	img : {
+		marginLeft: 40,
+		width: 200,
+		height: 200, 
+		marginTop: 20
 	}
 });
 

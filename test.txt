@@ -1,0 +1,97 @@
+import { View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
+import React, { useState } from 'react';
+import { addDoc, collection } from 'firebase/firestore';
+import { getStorage, ref, uploadString } from "firebase/storage";
+import { launchCamera, MediaTypeOptions } from 'react-native-image-picker';
+import { FIRESTORE_DB } from '../../firebaseConfig';
+
+const InsertRawMaterial = ({navigation}) => {
+    const [materialid, setMaterialid] = useState('');
+    const [material, setMaterial] = useState('');
+    const [supplier, setSupplier] = useState('');
+    const [price, setPrice] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [imageUri, setImageUri] = useState(null);
+
+    const isFormNotFilled = () => {
+        return materialid.trim() === '' || material.trim() === '' || supplier.trim() === '' || price.trim() === '' || quantity.trim() === '';
+    }
+
+    const launchImagePicker = () => {
+        const options = {
+            mediaType: MediaTypeOptions.Images,
+            includeBase64: true,
+            maxHeight: 500,
+            maxWidth: 500,
+        };
+        launchCamera(options, response => {
+            if (response.uri) {
+                setImageUri(response.uri);
+            }
+        });
+    };
+
+    const addMaterial = async () => {
+        try {
+            const imageFileName = imageUri ? `${Date.now()}.jpg` : null;
+            const storageRef = getStorage().ref();
+            let imageUrl = null;
+            if (imageFileName) {
+                const imageRef = ref(storageRef, imageFileName);
+                await uploadString(imageRef, imageUri, 'data_url');
+                imageUrl = await imageRef.getDownloadURL();
+            }
+            const docRef = await addDoc(collection(FIRESTORE_DB, 'rawmaterials'), {
+                materialId: materialid,
+                materialName: material,
+                supplierName: supplier,
+                materialPrice: price,
+                materialQuantity: quantity,
+                imageUrl,
+            });
+            setMaterialid('');
+            setMaterial('');
+            setSupplier('');
+            setPrice('');
+            setQuantity('');
+            setImageUri(null);
+            console.log('Document written with ID: ', docRef.id);
+        } catch (e) {
+            console.error('Error adding document: ', e);
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
+                <View style={styles.button}>
+                    <Text style={styles.text} >Back</Text>
+                </View>
+            </TouchableOpacity>
+
+            <View>
+                <Text style={styles.header}>Material ID</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Insert material id"
+                    onChangeText={(text) => setMaterialid(text)}
+                    value={materialid}
+                />
+
+                <Text style={styles.header}>Material Name</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Insert material name"
+                    onChangeText={(text) => setMaterial(text)}
+                    value={material}
+                />
+
+                <Text style={styles.header}>Supplier Name</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Insert supplier name"
+                    onChangeText={(text) => setSupplier(text)}
+                    value={supplier}
+                />
+
+                <Text style={styles.header}>
