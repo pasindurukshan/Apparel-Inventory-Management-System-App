@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, Alert  } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, Alert, Image  } from 'react-native';
 import { doc, updateDoc, deleteDoc  } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
+import { ScrollView } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const UpdateRawMaterials = ({ navigation, route }) => {
   const { item } = route.params;
@@ -56,7 +58,24 @@ const UpdateRawMaterials = ({ navigation, route }) => {
   // navigation.navigate('Viewrawmaterials')
   return (
     
-    <View style={styles.container}>
+    <LinearGradient
+            style={styles.background}
+            colors={['black', 'purple']}
+
+            start={{
+                x:1.5,
+                y:0.7
+            }}
+    
+            end={{
+                x:0,
+                y:1
+            }}
+        >
+      <ScrollView >
+        <View style={styles.container}>
+          <Text style={styles.topic}>Update Item</Text>
+        </View>
         <Text style={styles.header}>Material ID</Text>
         <TextInput 
         style={styles.input} 
@@ -90,85 +109,108 @@ const UpdateRawMaterials = ({ navigation, route }) => {
 
         <Text style={styles.header}>Quantity</Text> 
         <TextInput 
-        style={styles.input} 
-        value={materialQuantity} 
-        keyboardType="numeric"
-        onChangeText={setMaterialQuantity} 
+          style={styles.input} 
+          value={materialQuantity} 
+          keyboardType="numeric"
+          onChangeText={setMaterialQuantity} 
         />
 
         <View style={styles.btncontainer}>
-        <TouchableOpacity
-            onPress={() => {
-                updateItem();
-                navigation.navigate('Viewrawmaterials')
-            }}
-        >
-            <Text style={styles.btn}>Update</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+              onPress={() => {
+                  updateItem();
+                  navigation.navigate('Viewrawmaterials')
+              }}
+          >
+              <Text style={styles.btn}>Update</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.btncontainer}>
-        <TouchableOpacity
-            onPress={() => {
-              handleDeleteButtonPress();
-            }}
-        >
-            <Text style={styles.btn}>Delete Item</Text>
-        </TouchableOpacity>
-        </View>
-    </View>
+          <TouchableOpacity
+              onPress={() => {
+                handleDeleteButtonPress();
+              }}
+          >
+              <Text style={styles.btn}>Delete Item</Text>
+          </TouchableOpacity>        
+      </View>
+      </ScrollView>
+      </LinearGradient>
   );
 
 };
 
-  const styles = StyleSheet.create({
-    container: {
-        marginTop: 120,
-		    justifyContent: 'center',
-    },
-    form : {
-        marginVertical: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    input : {
-		marginTop: 10,
-		marginLeft: 40,
-        height: 50,
-		width: '80%',
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 10,
-        backgroundColor: '#fff',
-    },
-    btncontainer : {
-		marginTop: 30,
-		marginLeft: 40,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '80%',
-		backgroundColor: 'purple',
-		height: 50,
-		borderRadius: 10
-	},
-	btn : {
-		color: 'white',
-		fontSize: 17
-	},
-	button: {
-        backgroundColor: 'purple',
-        width: 60,
-        height: 60,
-        borderRadius: 50
-    },
-    text : {
-        color: 'white',
-		padding: 20
-    },
-    header: {
-		marginTop: 10,
-		marginLeft: 40,
-		fontSize: 20
-	}
+const styles = StyleSheet.create({
+  form : {
+      marginVertical: 20,
+      flexDirection: 'row',
+      justifyContent : 'center',
+      alignItems: 'center',
+  },
+  input : {
+      marginTop: 10,
+      marginLeft: 40,
+      height: 50,
+      width: '80%',
+      borderWidth: 1,
+      borderRadius: 10,
+      padding: 10,
+      backgroundColor: '#fff',
+  },
+  btncontainer : {
+      marginTop: 30,
+      marginLeft: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '80%',
+      backgroundColor: 'black',
+      height: 50,
+      borderColor: 'white',
+      borderWidth: 1,
+      borderRadius: 10
+  },
+  btn : {
+    color: 'white',
+    fontSize: 17
+  },
+  button: {
+    backgroundColor: 'purple',
+    width: 60,
+    height: 60,
+    borderRadius: 50
+  },
+  text : {
+      color: 'white',
+      padding: 20
+  },
+  header: {
+      marginTop: 10,
+      marginLeft: 40,
+      fontSize: 20,
+      color : 'white'
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 5,
+  },
+  imgContainer: {
+    alignItems: 'center'
+  },
+  background: {
+    flex: 1,      
+    paddingTop: 60,        
+  },
+  topic : {
+    marginTop : 10,
+    color :'white',
+    fontSize: 50,
+  },
+  container : {
+    alignItems : 'center',
+    marginBottom: 20
+  }
   })
 
   export default UpdateRawMaterials
