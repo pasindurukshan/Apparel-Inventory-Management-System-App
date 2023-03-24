@@ -44,24 +44,31 @@ const InsertRawMaterial = ({navigation}) => {
             </TouchableOpacity>
 
 		<View>
+			<Text style={styles.header}>Material ID</Text>
 			<TextInput
 				style={styles.input}
 				placeholder="Insert material id"
 				onChangeText={(text) => setMaterialid(text)}
 				value={materialid}
 			/>
+
+			<Text style={styles.header}>Material Name</Text>
 			<TextInput
 				style={styles.input}
 				placeholder="Insert material name"
 				onChangeText={(text) => setMaterial(text)}
 				value={material}
 			/>
+
+			<Text style={styles.header}>Supplier Name</Text>
 			<TextInput
 				style={styles.input}
 				placeholder="Insert supplier name"
 				onChangeText={(text) => setSupplier(text)}
 				value={supplier}
 			/>
+
+			<Text style={styles.header}>Price</Text>
 			<TextInput
 				style={styles.input}
 				placeholder="Insert price"
@@ -69,6 +76,8 @@ const InsertRawMaterial = ({navigation}) => {
 				onChangeText={(text) => setPrice(text)}
 				value={price}
 			/>
+
+			<Text style={styles.header}>Quantity</Text>
 			<TextInput
 				style={styles.input}
 				placeholder="Insert quantity"
@@ -102,7 +111,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     input : {
-		marginTop: 10,
+		marginTop: 1,
 		marginLeft: 40,
         height: 50,
 		width: '80%',
@@ -134,7 +143,12 @@ const styles = StyleSheet.create({
     text : {
         color: 'white',
 		padding: 20
-    }
+    },
+	header: {
+		marginTop: 10,
+		marginLeft: 40,
+		fontSize: 20
+	}
 });
 
 
