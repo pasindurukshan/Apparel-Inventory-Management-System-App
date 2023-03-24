@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { ScrollView } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const InsertRawMaterial = ({navigation}) => {
     const [materialid, setMaterialid] = useState('');
@@ -25,7 +26,7 @@ const InsertRawMaterial = ({navigation}) => {
 		  quality: 1,
 		});
 	
-		if (!result.cancelled) {
+		if (!result.canceled) {
 		  setPhoto(result.uri);
 		}
 	};
@@ -54,14 +55,31 @@ const InsertRawMaterial = ({navigation}) => {
 	};
 
     return (
-		<View style={styles.container}>
-			<TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
-                <View style={styles.button}>
-                    <Text style={styles.text} >Back</Text>
-                </View>
-            </TouchableOpacity>
+		<LinearGradient
+            style={styles.background}
+            colors={['black', 'purple']}
+
+            start={{
+                x:1.5,
+                y:0.7
+            }}
+    
+            end={{
+                x:0,
+                y:1
+            }}
+        >
+		<View style={styles.headerContainer}>
+			<Text style={styles.topic}>Add An Item</Text>
+		</View>
 		<ScrollView>
-		<View>
+		{/* <View style={styles.container}>
+			<TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
+			<View style={styles.button}>
+			<Text style={styles.text} >Back</Text>
+			</View>
+            </TouchableOpacity>
+		<View> */}
 			<Text style={styles.header}>Material ID</Text>
 			<TextInput
 				style={styles.input}
@@ -112,13 +130,15 @@ const InsertRawMaterial = ({navigation}) => {
 				</TouchableOpacity>
 			</View>
 
-			{photo && (
-				<Image
-				source={{ uri: photo }}
-				style={styles.img}
-				/>
-			)}									
-		</View>	
+			<View style={styles.imgContainer}>
+				{photo && (
+					<Image
+					source={{ uri: photo }}
+					style={styles.img}
+					/>
+				)}
+			</View>
+				
 
 		<View style={styles.btncontainer}>
 			{photo && (
@@ -130,8 +150,8 @@ const InsertRawMaterial = ({navigation}) => {
 				</TouchableOpacity>
 			)}
 		</View>
-		</ScrollView>
-	</View>
+	</ScrollView>
+	</LinearGradient>
     )
 }
 
@@ -161,19 +181,23 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		width: '80%',
-		backgroundColor: 'purple',
+		backgroundColor: 'black',
 		height: 50,
-		borderRadius: 10
+		borderRadius: 10,
+		borderColor: 'white',
+		borderWidth: 1
 	},
 	btn : {
 		color: 'white',
 		fontSize: 17
 	},
 	button: {
-        backgroundColor: 'purple',
+        backgroundColor: 'black',
         width: 60,
         height: 60,
-        borderRadius: 50
+        borderRadius: 50,
+		borderColor: 'white',
+		borderWidth: 1
     },
     text : {
         color: 'white',
@@ -182,23 +206,46 @@ const styles = StyleSheet.create({
 	header: {
 		marginTop: 10,
 		marginLeft: 40,
-		fontSize: 20
+		fontSize: 20,
+		color : "white"
 	},
 	imgBtn : {
-		backgroundColor: 'purple',
-		marginTop: 10,
+		backgroundColor: 'black',
+		marginTop: 15,
 		marginLeft: 40,
 		width: 150,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 10
+		borderRadius: 10,
+		borderColor : 'white',
+		borderWidth: 1
 	},
 	img : {
-		marginLeft: 40,
+		// marginLeft: 40,
 		width: 200,
 		height: 200, 
-		marginTop: 20
+		marginTop: 20,
+		borderRadius: 10,
+		borderColor: 'white',
+		borderWidth: 1,
+	},
+	background: {
+		flex: 1,      
+		paddingTop: 60,
+		paddingBottom: 30        
+	},
+	headerContainer : {
+		alignItems : 'center',
+    	marginBottom: 20
+	},
+	topic : {
+		marginTop : 10,
+		color :'white',
+		fontSize: 50,
+	},
+	imgContainer : {
+		alignItems : 'center'
 	}
 });
 
