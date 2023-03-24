@@ -1,0 +1,71 @@
+To implement the camera feature in your React Native app, you can use the react-native-camera library, which provides easy-to-use components for capturing photos or videos. Here's an example of how to add the camera feature to your InsertRawMaterial component:
+
+First, install the react-native-camera library:
+npm install react-native-camera
+
+Import the necessary components from the library:
+
+import { RNCamera } from 'react-native-camera';
+import { useCamera } from 'react-native-camera-hooks';
+
+Define a state variable to store the captured photo:
+
+const [photo, setPhoto] = useState(null);
+
+Define a function to take a photo and set the photo state variable:
+
+const takePicture = async () => {
+  const data = await camera.takePictureAsync({ quality: 0.5 });
+  setPhoto(data.uri);
+};
+
+Use the useCamera hook to get access to the camera component and other camera-related functions:
+
+const [{ cameraRef }, { toggleFacing, toggleFlash }] = useCamera();
+
+Add the camera component to the View:
+
+<RNCamera
+  ref={cameraRef}
+  style={styles.camera}
+  captureAudio={false}
+  type={RNCamera.Constants.Type.back}
+  flashMode={RNCamera.Constants.FlashMode.off}
+>
+  <View style={styles.cameraButtons}>
+    <TouchableOpacity onPress={toggleFlash}>
+      <Text style={styles.buttonText}>Flash</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={takePicture}>
+      <Text style={styles.buttonText}>Take Picture</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={toggleFacing}>
+      <Text style={styles.buttonText}>Switch Camera</Text>
+    </TouchableOpacity>
+  </View>
+</RNCamera>
+
+Add a button to the View to upload the photo to Firebase:
+
+<Button
+  title="Add Material"
+  onPress={() => {
+    // Upload the photo and other data to Firebase
+  }}
+  disabled={isFormNotFilled() || !photo}
+/>
+
+Finally, modify the addMaterial function to also upload the photo to Firebase:
+
+const addMaterial = async () => {
+  try {
+    const storageRef = ref(FIREBASE_STORAGE, `photos/${materialid}.jpg`);
+    const response = await fetch(photo);
+    const blob = await response.blob();
+    const snapshot = await uploadBytes(storageRef, blob);
+
+    const docRef = await addDoc(collection(FIRESTORE_DB, 'rawmaterials'), {
+      materialId: materialid,
+      materialName: material,
+      supplierName: supplier,
+      materialPrice: price,
