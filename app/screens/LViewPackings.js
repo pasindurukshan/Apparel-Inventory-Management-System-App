@@ -6,12 +6,12 @@ import InsertRawMaterial from '../screens/InsertRawMaterial';
 
 const LViewPackings = ({ navigation }) => {
 
-    const [rawinfo, setrawInfo] = useState([]);
+    const [packinfo, setPackInfo] = useState([]);
 
     useEffect(() => {
-        const rawRef = collection(FIRESTORE_DB, 'rawmaterials');
+        const packRef = collection(FIRESTORE_DB, 'packing');
 
-        const subscriber = onSnapshot(rawRef, {
+        const subscriber = onSnapshot(packRef, {
             next: (snapshot) => {
                 const info = [];
                 snapshot.docs.forEach((doc) => {
@@ -23,21 +23,26 @@ const LViewPackings = ({ navigation }) => {
                     });
                 });
 
-                setrawInfo(info);
+                setPackInfo(info);
             }
         });
-
-        // Unsubscribe from events when no longer in use
         return () => subscriber();
     }, []);
 
-    const renderRawItem = ({ item }) => (
-        <TouchableOpacity>
+    const renderPackItem = ({ item }) => (
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate("LUpdatePackings", { item });
+            }}>
             <View style={styles.rawItemContainer}>
-                <Text style={styles.listItem}>{item.materialName}</Text>
-                <Text style={styles.listItem}>{item.materialPrice}</Text>
-                <Text style={styles.listItem}>{item.materialQuantity}</Text>
-                <Text style={styles.listItem}>{item.supplierName}</Text>
+                <Text style={styles.listItem}>OrderID   :              {item.orderID}</Text>
+                <Text style={styles.listItem}>Customer  :           {item.customer}</Text>
+                <Text style={styles.listItem}>Category  :            {item.category}</Text>
+                <Text style={styles.listItem}>Payment  :             {item.payment}</Text>
+                <Text style={styles.listItem}>Quantity   :            {item.quantity}</Text>
+                <Text style={styles.listItem}>Weight      :            {item.weight}</Text>
+                <Text style={styles.listItem}>DueDate   :            {item.dueDate}</Text>
+                <Text style={styles.listItem}>Address   :            {item.address}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -46,16 +51,16 @@ const LViewPackings = ({ navigation }) => {
     const renderItemList = ({ item }) => (
         <FlatList
             style={styles.list}
-            data={rawinfo.filter(raw => raw.materialName === item.materialName)}
-            renderItem={renderRawItem}
+            data={packinfo.filter(pack => pack.orderID === item.orderID)}
+            renderItem={renderPackItem}
             keyExtractor={(raw) => raw.id}
         />
     );
 
-    const groupedRawInfo = Object.values(rawinfo.reduce((acc, cur) => {
-        const key = cur.materialName;
+    const groupedPackInfo = Object.values(packinfo.reduce((acc, cur) => {
+        const key = cur.orderID;
         if (!acc[key]) {
-            acc[key] = { materialName: key };
+            acc[key] = { orderID: key };
         }
         acc[key].data = [...(acc[key].data || []), cur];
         return acc;
@@ -65,15 +70,20 @@ const LViewPackings = ({ navigation }) => {
 
     return (
         <View>
-            {rawinfo.length > 0 && (
+            {packinfo.length > 0 && (
                 <ScrollView style={styles.container}>
                     <FlatList
-                        data={groupedRawInfo}
+                        data={groupedPackInfo}
                         renderItem={renderItemList}
-                        keyExtractor={(item) => item.materialName}
+                        keyExtractor={(item) => item.orderID}
                     />
                 </ScrollView>
             )}
+            <TouchableOpacity onPress={() => navigation.navigate('LAddNewPacking')}>
+                <View style={styles.button}>
+                    <Text style={styles.text} >Back</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -100,8 +110,15 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 50
     },
+    button: {
+        backgroundColor: 'purple',
+        width: "15%",
+        height: 40,
+        borderRadius: 50
+    },
     text: {
-        color: 'white'
+        color: 'white',
+        padding: 10
     }
 });
 

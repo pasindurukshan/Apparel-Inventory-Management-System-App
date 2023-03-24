@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InsertRawMaterial from './app/screens/InsertRawMaterial';
 import LAddNewPacking from './app/screens/LAddNewPacking';
+import LUpdatePackings from './app/screens/LUpdatePackings';
 import LViewPackings from './app/screens/LViewPackings';
 import UpdateRawMaterials from './app/screens/UpdateRawMaterials';
 import ViewRawMaterials from './app/screens/ViewRawMaterials';
@@ -13,8 +14,9 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				{/* <Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} /> */}
+				<Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} />
 				<Stack.Screen name="LViewPackings" component={LViewPackings} options={{ headerShown: false }} />
+				<Stack.Screen name="LUpdatePackings" component={LUpdatePackings} options={{ headerShown: false }} />
 				{/* <Stack.Screen name="Addrawmaterials" component={InsertRawMaterial} options={{headerShown: false}}/>
 				<Stack.Screen name="Viewrawmaterials" component={ViewRawMaterials} options={{headerShown: false}}/>
 				<Stack.Screen name="Updaterawmaterials" component={UpdateRawMaterials} options={{headerShown: false}}/> */}

@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Button, SafeAreaView, ScrollView, TouchableOpacity, Text } from 'react-native';
 import React, { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
@@ -55,74 +55,76 @@ const LAddNewPacking = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.navigate('LViewPackings')}>
-                <View style={styles.button}>
-                    <Text style={styles.text} >Back</Text>
-                </View>
-            </TouchableOpacity>
-
-            <View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add New Order ID"
-                    onChangeText={(text) => setOrderID(text)}
-                    value={orderID}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add New Customer"
-                    onChangeText={(text) => setCustomer(text)}
-                    value={customer}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add Category name"
-                    onChangeText={(text) => setCategory(text)}
-                    value={category}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add Payment Status"
-                    onChangeText={(text) => setPayment(text)}
-                    value={payment}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add Quantity"
-                    onChangeText={(text) => setQuantity(text)}
-                    value={quantity}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add Weight (KG)"
-                    onChangeText={(text) => setWeight(text)}
-                    value={weight}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add Due Date"
-                    onChangeText={(text) => setDueDate(text)}
-                    value={dueDate}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Add Address"
-                    onChangeText={(text) => setAddress(text)}
-                    value={address}
-                />
-            </View>
-
-            <View style={styles.btncontainer}>
-                <TouchableOpacity
-                    onPress={addPacking}
-                    disabled={isFormNotFilled()}
-                >
-                    <Text style={styles.btn}>Add Packing</Text>
+        <ScrollView>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => navigation.navigate('LViewPackings')}>
+                    <View style={styles.button}>
+                        <Text style={styles.text} >Back</Text>
+                    </View>
                 </TouchableOpacity>
-            </View>
 
-        </View>
+                <View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add New Order ID"
+                        onChangeText={(text) => setOrderID(text)}
+                        value={orderID}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add New Customer"
+                        onChangeText={(text) => setCustomer(text)}
+                        value={customer}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Category name"
+                        onChangeText={(text) => setCategory(text)}
+                        value={category}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Payment Status"
+                        onChangeText={(text) => setPayment(text)}
+                        value={payment}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Quantity"
+                        onChangeText={(text) => setQuantity(text)}
+                        value={quantity}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Weight (KG)"
+                        onChangeText={(text) => setWeight(text)}
+                        value={weight}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Due Date"
+                        onChangeText={(text) => setDueDate(text)}
+                        value={dueDate}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Address"
+                        onChangeText={(text) => setAddress(text)}
+                        value={address}
+                    />
+                </View>
+
+                <View style={styles.btncontainer}>
+                    <TouchableOpacity
+                        onPress={addPacking}
+                        disabled={isFormNotFilled()}
+                    >
+                        <Text style={styles.btn}>Add Packing</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        </ScrollView>
     )
 }
 
@@ -162,13 +164,13 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'purple',
-        width: 60,
-        height: 60,
+        width: "15%",
+        height: 40,
         borderRadius: 50
     },
     text: {
         color: 'white',
-        padding: 20
+        padding: 10
     }
 });
 
