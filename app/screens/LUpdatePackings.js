@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Picker } from '@react-native-picker/picker';
 
 const LUpdatePackings = ({ navigation, route }) => {
   const { item } = route.params;
@@ -61,100 +63,128 @@ const LUpdatePackings = ({ navigation, route }) => {
   };
 
   return (
+    <LinearGradient
+      style={styles.background}
+      colors={['black', 'purple']}
 
-    <ScrollView>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate('LViewPackings')}>
-          <View style={styles.button}>
-            <Text style={styles.text} >Back</Text>
-          </View>
-        </TouchableOpacity>
-        <Text style={styles.header}>Order ID</Text>
-        <TextInput
-          style={styles.input}
-          value={orderID}
-          editable={false}
-          selectable={false}
-          onChangeText={setOrderID}
-        />
+      start={{
+        x: 1.5,
+        y: 0.7
+      }}
 
-        <Text style={styles.header}>Customer Name</Text>
-        <TextInput
-          style={styles.input}
-          value={customer}
-          onChangeText={setCustomer}
-        />
-
-        <Text style={styles.header}>Category Name</Text>
-        <TextInput
-          style={styles.input}
-          value={category}
-          onChangeText={setCategory}
-        />
-
-        <Text style={styles.header}>Payment Status</Text>
-        <TextInput
-          style={styles.input}
-          value={payment}
-          onChangeText={setPayment}
-        />
-
-        <Text style={styles.header}>Quantity</Text>
-        <TextInput
-          style={styles.input}
-          value={quantity}
-          onChangeText={setQuantity}
-        />
-
-        <Text style={styles.header}>Weight (KG)</Text>
-        <TextInput
-          style={styles.input}
-          value={weight}
-          onChangeText={setWeight}
-        />
-
-        <Text style={styles.header}>Due Date</Text>
-        <TextInput
-          style={styles.input}
-          value={dueDate}
-          onChangeText={setDueDate}
-        />
-
-        <Text style={styles.header}>Address</Text>
-        <TextInput
-          style={styles.input}
-          value={address}
-          onChangeText={setAddress}
-        />
-
-        <View style={styles.btncontainer}>
-          <TouchableOpacity
-            onPress={() => {
-              updateItem();
-              navigation.navigate('LViewPackings')
-            }}
-          >
-            <Text style={styles.btn}>Update</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.btncontainers}>
-          <TouchableOpacity
-            onPress={() => {
-              handleDeleteButtonPress();
-            }}
-          >
-            <Text style={styles.btn}>Delete Item</Text>
-          </TouchableOpacity>
-        </View>
+      end={{
+        x: 0,
+        y: 1
+      }}
+    >
+      <View style={styles.headerContainer}>
+        <Text style={styles.topic}>Update Packing</Text>
       </View>
-    </ScrollView>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.header}>Order ID</Text>
+          <TextInput
+            style={styles.input}
+            value={orderID}
+            editable={false}
+            selectable={false}
+            onChangeText={setOrderID}
+          />
+
+          <Text style={styles.header}>Customer Name</Text>
+          <TextInput
+            style={styles.input}
+            value={customer}
+            onChangeText={setCustomer}
+          />
+
+          <Text style={styles.header}>Category Name</Text>
+          <TextInput
+            style={styles.input}
+            value={category}
+            onChangeText={setCategory}
+          />
+
+          <Text style={styles.header}>Payment Status</Text>
+          {/* <TextInput
+            style={styles.input}
+            value={payment}
+            onChangeText={setPayment}
+          /> */}
+          <Picker
+            selectedValue={payment}
+            onValueChange={(payment) => setPayment(payment)}
+            style={styles.input}
+          >
+            <TextInput
+              style={styles.input}
+              placeholder="Add Payment Status"
+              onChangeText={(text) => setPayment(text)}
+              value={payment}
+            />
+            <Picker.Item label="Paid" value="Paid" />
+            <Picker.Item label="Cash On Delivery" value="COD" />
+          </Picker>
+
+          <Text style={styles.header}>Quantity</Text>
+          <TextInput
+            style={styles.input}
+            value={quantity}
+            onChangeText={setQuantity}
+            keyboardType="numeric"
+          />
+
+          <Text style={styles.header}>Weight (KG)</Text>
+          <TextInput
+            style={styles.input}
+            value={weight}
+            onChangeText={setWeight}
+            keyboardType="numeric"
+          />
+
+          <Text style={styles.header}>Due Date</Text>
+          <TextInput
+            style={styles.input}
+            value={dueDate}
+            onChangeText={setDueDate}
+          />
+
+          <Text style={styles.header}>Address</Text>
+          <TextInput
+            style={styles.input}
+            value={address}
+            onChangeText={setAddress}
+          />
+
+          <View style={styles.btncontainer}>
+            <TouchableOpacity
+              onPress={() => {
+                updateItem();
+                navigation.navigate('LViewPackings')
+              }}
+            >
+              <Text style={styles.btn}>Update</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.btncontainers}>
+            <TouchableOpacity
+              onPress={() => {
+                handleDeleteButtonPress();
+              }}
+            >
+              <Text style={styles.btn}>Delete Item</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 120,
+    marginTop: 20,
     justifyContent: 'center',
   },
   form: {
@@ -178,7 +208,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '80%',
-    backgroundColor: 'purple',
+    backgroundColor: '#222849',
     height: 50,
     borderRadius: 10
   },
@@ -189,7 +219,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '80%',
-    backgroundColor: 'purple',
+    backgroundColor: '#222849',
     height: 50,
     borderRadius: 10
   },
@@ -198,7 +228,7 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   button: {
-    backgroundColor: 'purple',
+    backgroundColor: '#222849',
     width: "15%",
     height: 40,
     borderRadius: 50
@@ -210,8 +240,23 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 10,
     marginLeft: 40,
-    fontSize: 20
-  }
+    fontSize: 20,
+    color: "#FFF"
+  },
+  topic: {
+    marginTop: 10,
+    color: '#FFF',
+    fontSize: 42,
+  },
+  background: {
+    flex: 1,
+    paddingTop: 60,
+    paddingBottom: 30
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 20
+  },
 })
 
 export default LUpdatePackings

@@ -2,7 +2,7 @@ import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, 
 import React, { useEffect, useState } from 'react'
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
-import InsertRawMaterial from '../screens/InsertRawMaterial';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LViewPackings = ({ navigation }) => {
 
@@ -34,7 +34,7 @@ const LViewPackings = ({ navigation }) => {
             onPress={() => {
                 navigation.navigate("LUpdatePackings", { item });
             }}>
-            <View style={styles.rawItemContainer}>
+            <View style={styles.ItemContainer}>
                 <Text style={styles.listItemorder}>OrderID   :              {item.orderID}</Text>
                 <Text style={styles.listItem}>Customer  :           {item.customer}</Text>
                 <Text style={styles.listItem}>Category  :            {item.category}</Text>
@@ -69,45 +69,59 @@ const LViewPackings = ({ navigation }) => {
 
 
     return (
-        <View>
-            {packinfo.length > 0 && (
-                <ScrollView style={styles.container}>
-                    <FlatList
-                        data={groupedPackInfo}
-                        renderItem={renderItemList}
-                        keyExtractor={(item) => item.orderID}
-                    />
-                </ScrollView>
-            )}
-            <TouchableOpacity onPress={() => navigation.navigate('LAddNewPacking')}>
-                <View style={styles.buttons}>
-                    <View style={styles.button}>
-                        <Text style={styles.text} >Back</Text>
-                    </View>
+        <LinearGradient
+            style={styles.background}
+            colors={['black', 'purple']}
+
+            start={{
+                x: 1.5,
+                y: 0.7
+            }}
+
+            end={{
+                x: 0,
+                y: 1
+            }}
+        >
+            <View>
+                <View style={styles.headerContainer}>
+                    <Text style={styles.topic}>Packing Report</Text>
                 </View>
-            </TouchableOpacity>
-        </View>
+                {packinfo.length > 0 && (
+                    <ScrollView style={styles.container}>
+                        <FlatList
+                            data={groupedPackInfo}
+                            renderItem={renderItemList}
+                            keyExtractor={(item) => item.orderID}
+                        />
+                    </ScrollView>
+                )}
+            </View>
+        </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 105,
+        marginTop: 50,
     },
     list: {
-        borderColor: 'black',
+        borderColor: 'white',
         borderWidth: 1,
         margin: 5,
         borderRadius: 10,
-        padding: 15
+        padding: 15,
+        backgroundColor: "#222849"
     },
     listItemorder: {
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: "#FFF",
     },
     listItem: {
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: "#FFF"
     },
     button: {
         backgroundColor: 'purple',
@@ -129,7 +143,20 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         padding: 10
-    }
+    },
+    headerContainer: {
+        alignItems: 'center'
+    },
+    topic: {
+        marginTop: 10,
+        color: '#FFF',
+        fontSize: 42,
+    },
+    background: {
+        flex: 1,
+        paddingTop: 60,
+    },
+
 });
 
 
