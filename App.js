@@ -15,20 +15,11 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				{/* <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-				<Stack.Screen name="LPacking" component={LPacking} options={{ headerShown: false }} /> */}
+				 <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
 				<Stack.Screen name="LViewPackings" component={LViewPackings} options={{ headerShown: false }} />
 				<Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} />
 				<Stack.Screen name="LUpdatePackings" component={LUpdatePackings} options={{ headerShown: false }} />
-				{/* <Stack.Screen name="Addrawmaterials" component={InsertRawMaterial} options={{headerShown: false}}/>
-				<Stack.Screen name="Viewrawmaterials" component={ViewRawMaterials} options={{headerShown: false}}/>
-				<Stack.Screen name="Updaterawmaterials" component={UpdateRawMaterials} options={{headerShown: false}}/> */}
-
-
 			</Stack.Navigator>
-			{/* <Drawer.Navigator drawerContent={(props) => <DrawerNavigation {...props} />}>
-				<Drawer.Screen name="Sample" component={Sample} options={{ headerShown: false }} />
-			</Drawer.Navigator> */}
 		</NavigationContainer>
 	);
 }
