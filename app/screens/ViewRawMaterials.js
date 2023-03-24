@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView, SafeAreaView, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { addDoc, collection, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
@@ -36,11 +36,20 @@ const ViewRawMaterials = ({navigation}) => {
           navigation.navigate("Updaterawmaterials", { item });
         }}
       >
-          <View style={styles.rawItemContainer}>
-            <Text style={styles.listItem}>{item.materialName}</Text>
-            <Text style={styles.listItem}>{item.materialPrice}</Text>
-            <Text style={styles.listItem}>{item.materialQuantity}</Text>
-            <Text style={styles.listItem}>{item.supplierName}</Text>
+        <View style={styles.rawItemContainer}>
+            <View style={styles.textContainer}>
+                <Text style={styles.listItem}>{item.materialName}</Text>
+                <Text style={styles.listItem}>{item.materialPrice}</Text>
+                <Text style={styles.listItem}>{item.materialQuantity}</Text>
+                <Text style={styles.listItem}>{item.supplierName}</Text>
+            </View>
+
+            <View>
+                <Image
+                    style={styles.image}
+                    source={{ uri: item.image }}
+                />
+            </View>
           </View>
       </TouchableOpacity>
     );
@@ -107,6 +116,20 @@ const styles = StyleSheet.create({
     },
     text : {
         color: 'white'
+    },
+    image: {
+        width: 100,
+        height: 100,
+        resizeMode: 'cover',
+        borderRadius: 5,
+        marginLeft: 50
+      },
+    rawItemContainer: {
+    flexDirection: 'row'
+    },
+    textContainer: {
+        width: 200,
+        padding: 10
     }
 });
 
