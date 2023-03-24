@@ -33,7 +33,7 @@ const LUpdatePackings = ({ navigation, route }) => {
     try {
       const packRef = doc(FIRESTORE_DB, "packing", item.id);
       await deleteDoc(packRef);
-      navigation.navigate('Viewrawmaterials');
+      navigation.navigate('LViewPackings');
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
@@ -52,7 +52,7 @@ const LUpdatePackings = ({ navigation, route }) => {
           text: "Delete",
           onPress: () => {
             deleteItem()
-            navigation.navigate('Viewrawmaterials')
+            navigation.navigate('LViewPackings')
           },
           style: "destructive"
         }
@@ -131,7 +131,7 @@ const LUpdatePackings = ({ navigation, route }) => {
           <TouchableOpacity
             onPress={() => {
               updateItem();
-              navigation.navigate('Viewrawmaterials')
+              navigation.navigate('LViewPackings')
             }}
           >
             <Text style={styles.btn}>Update</Text>

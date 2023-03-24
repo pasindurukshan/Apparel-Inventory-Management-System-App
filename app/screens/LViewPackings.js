@@ -35,7 +35,7 @@ const LViewPackings = ({ navigation }) => {
                 navigation.navigate("LUpdatePackings", { item });
             }}>
             <View style={styles.rawItemContainer}>
-                <Text style={styles.listItem}>OrderID   :              {item.orderID}</Text>
+                <Text style={styles.listItemorder}>OrderID   :              {item.orderID}</Text>
                 <Text style={styles.listItem}>Customer  :           {item.customer}</Text>
                 <Text style={styles.listItem}>Category  :            {item.category}</Text>
                 <Text style={styles.listItem}>Payment  :             {item.payment}</Text>
@@ -80,8 +80,10 @@ const LViewPackings = ({ navigation }) => {
                 </ScrollView>
             )}
             <TouchableOpacity onPress={() => navigation.navigate('LAddNewPacking')}>
-                <View style={styles.button}>
-                    <Text style={styles.text} >Back</Text>
+                <View style={styles.buttons}>
+                    <View style={styles.button}>
+                        <Text style={styles.text} >Back</Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         </View>
@@ -99,8 +101,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 15
     },
+    listItemorder: {
+        fontSize: 25,
+        fontWeight: 'bold'
+    },
     listItem: {
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: 'bold'
     },
     button: {
@@ -109,6 +115,10 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 50
+    },
+    buttons: {
+        paddingTop: 10,
+        paddingLeft: 10
     },
     button: {
         backgroundColor: 'purple',
