@@ -37,13 +37,13 @@ const LViewPackings = ({ navigation }) => {
             }}>
             <View style={styles.ItemContainer}>
                 <Text style={styles.listItemorder}>OrderID   :              {item.orderID}</Text>
-                <Text style={styles.listItem}>Customer  :           {item.customer}</Text>
-                <Text style={styles.listItem}>Category  :            {item.category}</Text>
-                <Text style={styles.listItem}>Payment  :             {item.payment}</Text>
-                <Text style={styles.listItem}>Quantity   :            {item.quantity}</Text>
-                <Text style={styles.listItem}>Weight      :            {item.weight}</Text>
-                <Text style={styles.listItem}>DueDate   :            {item.dueDate}</Text>
-                <Text style={styles.listItem}>Address   :            {item.address}</Text>
+                <Text style={styles.listItem}>     Customer  :           {item.customer}</Text>
+                <Text style={styles.listItem}>     Category  :            {item.category}</Text>
+                <Text style={styles.listItem}>     Payment  :             {item.payment}</Text>
+                <Text style={styles.listItem}>     Quantity   :            {item.quantity}</Text>
+                <Text style={styles.listItem}>     Weight      :            {item.weight}</Text>
+                <Text style={styles.listItem}>     DueDate   :            {item.dueDate}</Text>
+                <Text style={styles.listItem}>     Address   :            {item.address}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -84,7 +84,7 @@ const LViewPackings = ({ navigation }) => {
                 y: 1
             }}
         >
-            <View>
+            <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.topic}>Packing Report</Text>
                 </View>
@@ -95,14 +95,14 @@ const LViewPackings = ({ navigation }) => {
                             renderItem={renderItemList}
                             keyExtractor={(item) => item.orderID}
                         />
-                        <TouchableOpacity
-                            style={styles.addButton}
-                            onPress={() => navigation.navigate("LAddNewPacking")}
-                        >
-                            <Ionicons name="add-circle-outline" size={70} color="white" />
-                        </TouchableOpacity>
                     </ScrollView>
                 )}
+                <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() => navigation.navigate("LAddNewPacking")}
+                >
+                    <Ionicons name="add-circle-outline" size={70} color="white" />
+                </TouchableOpacity>
             </View>
         </LinearGradient>
     )
@@ -110,8 +110,7 @@ const LViewPackings = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 50,
-        marginBottom: 40
+        flex: 1
     },
     list: {
         borderColor: 'white',
@@ -119,7 +118,8 @@ const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 10,
         padding: 15,
-        backgroundColor: "#222849"
+        backgroundColor: "#222849",
+        margin: 15
     },
     listItemorder: {
         fontSize: 25,
@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
         padding: 10
     },
     headerContainer: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30
     },
     topic: {
         marginTop: 10,
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     addButton: {
         width: 70,
         height: 70,
-        marginLeft: 320,
+        marginLeft: 310,
         marginBottom: 30,
     }
 
