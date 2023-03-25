@@ -2,16 +2,16 @@ import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, 
 import React, { useEffect, useState } from 'react'
 import { addDoc, collection, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
-import InsertRawMaterial from '../screens/InsertRawMaterial';
+import TPInsertOrder from './TPInsertOrder';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const ViewRawMaterials = ({navigation}) => {
+const TPVeiwOrder = ({navigation}) => {
     const [rawinfo, setrawInfo] = useState([]);
     const [selectedRaw, setSelectedRaw] = useState(null);
 
     useEffect(() => {
-        const rawRef = collection(FIRESTORE_DB, 'rawmaterials');
+        const rawRef = collection(FIRESTORE_DB, 'orderDetails');
     
         const subscriber = onSnapshot(rawRef, {
             next: (snapshot) => {
@@ -27,21 +27,22 @@ const ViewRawMaterials = ({navigation}) => {
             }
         });
     
-        // Unsubscribe from events when no longer in use
         return () => subscriber();
     }, []);
 
     const renderRawItem = ({ item }) => (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Updaterawmaterials", { item });
+          navigation.navigate("TPUpdateOrder", { item });
         }}
       >
         <View style={styles.rawItemContainer}>
             <View style={styles.textContainer}>
-                <Text style={styles.name}>{item.materialName}</Text>
-                <Text style={styles.listItem}>Price : Rs.{item.materialPrice}</Text>
-                <Text style={styles.listItem}>Quantity : {item.materialQuantity}</Text>
+                <Text style={styles.name}>#{item.orderId}</Text>
+                <Text style={styles.listItem}>{item.cusName}</Text>
+                <Text style={styles.listItem}>{item.address}</Text>
+                <Text style={styles.listItem}>{item.phoneNo}</Text>
+                <Text style={styles.listItem}>{item.orderDescription}</Text>
             </View>
             <View>
                 <Image
@@ -58,16 +59,16 @@ const ViewRawMaterials = ({navigation}) => {
     const renderItemList = ({ item }) => (        
         <FlatList
             style={styles.list}
-            data={rawinfo.filter(raw => raw.materialName === item.materialName)}
+            data={rawinfo.filter(raw => raw.cusName === item.cusName)}
             renderItem={renderRawItem}
             keyExtractor={(raw) => raw.id}
         />
     );
 
     const groupedRawInfo = Object.values(rawinfo.reduce((acc, cur) => {
-        const key = cur.materialName;
+        const key = cur.cusName;
         if (!acc[key]) {
-            acc[key] = { materialName: key };
+            acc[key] = { cusName: key };
         }
         acc[key].data = [...(acc[key].data || []), cur];
         return acc;
@@ -89,19 +90,19 @@ const ViewRawMaterials = ({navigation}) => {
                 y:1
             }}
         >
-            <Text style={styles.topic}>Raw Materials</Text>
+            <Text style={styles.topic}>Order Details</Text>
             {rawinfo.length > 0 && (
                 <ScrollView style={styles.container}>
                     <FlatList
                         data={groupedRawInfo}
                         renderItem={renderItemList}
-                        keyExtractor={(item) => item.materialName}
+                        keyExtractor={(item) => item.cusName}
                     />
                 </ScrollView>                
             )}
             <TouchableOpacity 
                 style={styles.addButton}
-                onPress={() => navigation.navigate("Addrawmaterials")}
+                onPress={() => navigation.navigate("TPInsertOrder")}
             >
                 <Ionicons name="add-circle-outline" size={70} color="white" />
             </TouchableOpacity>
@@ -175,4 +176,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ViewRawMaterials
+export default TPVeiwOrder
