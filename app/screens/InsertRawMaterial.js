@@ -136,7 +136,10 @@ const InsertRawMaterial = ({navigation}) => {
 		<View style={styles.btncontainer}>
 			{photo && (
 				<TouchableOpacity
-					onPress={addMaterial} 
+					onPress={() => {
+						addMaterial();
+						navigation.navigate('Viewrawmaterials')
+					}} 
 					disabled={isFormNotFilled()}	
 				>
 					<Text style={styles.btn}>Add Material</Text>

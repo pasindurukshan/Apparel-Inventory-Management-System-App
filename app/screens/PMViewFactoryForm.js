@@ -52,7 +52,7 @@ const PMViewFactoryForm = ({ navigation }) => {
                     
                     <QRCode
                         value={JSON.stringify(item.qrCodeValue)}
-                        size={100}
+                        size={110}
                     />
                 </View>
             </View>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     qrCodeContainer: {
         width: 100,
         height: 100,
-        marginTop: 42,
+        marginTop: 22,
         alignItems: 'center',
     },
     qrCode: {
