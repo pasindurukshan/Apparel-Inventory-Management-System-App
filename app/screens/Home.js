@@ -80,7 +80,7 @@ const Home = ({ navigation }) => {
                         }}>Productions</Text>
                     </View>
                     <Image
-                        source={require("./images/6.png")}
+                        source={require("./images/production.jpg")}
                     />
                 </TouchableOpacity>
 
@@ -143,7 +143,7 @@ const Home = ({ navigation }) => {
                         }}>Transport</Text>
                     </View>
                     <Image
-                        source={require("./images/6.png")}
+                        source={require("./images/transport.jpg")}
                     />
                 </TouchableOpacity>
 
