@@ -136,13 +136,14 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 130,
+        height: 130,
         resizeMode: 'cover',
-        marginLeft: 50,
+        marginLeft: 10,
         borderRadius : 10,
         borderColor: 'white',
-        borderWidth: 1
+        borderWidth: 1,
+        marginTop: 10,
     },
     rawItemContainer: {
         flexDirection: 'row'

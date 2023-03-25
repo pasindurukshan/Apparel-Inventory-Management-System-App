@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, Image } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from '../../firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -93,7 +93,7 @@ export default function AuthScreen({navigation}) {
         }}
     >
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Login/Register</Text>
+        <Image source={require("./images/logo.png")}></Image>
       </View>  
       {errorMessage !== "" && (
         <View style={styles.errorContainer}>
@@ -123,7 +123,9 @@ export default function AuthScreen({navigation}) {
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
-      <Text style={styles.buttonText}>Don't have an account ?</Text>
+      <View style={styles.text}>
+        <Text style={styles.buttonText}>Don't have an account ?</Text>
+      </View>
     </LinearGradient>
   );
 }
@@ -166,14 +168,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   background: {
-    flex: 1,      
-    paddingTop: 60,
+    flex: 1,
     paddingBottom: 30,
     justifyContent: 'center'        
 },
 titleContainer: {
     alignItems: 'center',
-    marginBottom: 40
 },
 header: {
     marginTop: 10,
@@ -191,4 +191,7 @@ errorContainer: {
     color: "red",
     fontSize: 30
   },
+  text : {
+    marginTop: 10
+  }
 });

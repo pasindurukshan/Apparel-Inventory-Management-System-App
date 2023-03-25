@@ -1,6 +1,7 @@
-import { View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import React from 'react'
 import SplashScreen from './SplashScreen'
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Isloading = ({ navigation }) => {
     const [showSplash, setShowSplash] = React.useState(true);
@@ -13,7 +14,7 @@ const Isloading = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={styles.background}>
             {showSplash ? (
                 <SplashScreen />
             ) : (
@@ -22,5 +23,12 @@ const Isloading = ({ navigation }) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        alignItems: 'center'   
+    },
+})
 
 export default Isloading
