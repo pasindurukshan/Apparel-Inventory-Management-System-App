@@ -73,13 +73,6 @@ const InsertRawMaterial = ({navigation}) => {
 			<Text style={styles.topic}>Add An Item</Text>
 		</View>
 		<ScrollView>
-		{/* <View style={styles.container}>
-			<TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
-			<View style={styles.button}>
-			<Text style={styles.text} >Back</Text>
-			</View>
-            </TouchableOpacity>
-		<View> */}
 			<Text style={styles.header}>Material ID</Text>
 			<TextInput
 				style={styles.input}
