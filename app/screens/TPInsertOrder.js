@@ -6,16 +6,16 @@ import { FIRESTORE_DB } from '../../firebaseConfig';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const InsertRawMaterial = ({navigation}) => {
-    const [materialid, setMaterialid] = useState('');
-	const [material, setMaterial] = useState('');
-	const [supplier, setSupplier] = useState('');
-	const [price, setPrice] = useState('');
-	const [quantity, setQuantity] = useState('');
+const TPInsertOrder = ({navigation}) => {
+    const [orderId, setOrderId] = useState('');
+	const [cusName, setCusName] = useState('');
+	const [address, setAddress] = useState('');
+	const [phoneNo, setPhoneNo] = useState('');
+	const [orderDescription, setOrderDescription] = useState('');
 	const [photo, setPhoto] = useState(null);
 
 	const isFormNotFilled = () => {
-		return materialid.trim() === '' || material.trim() === '' || supplier.trim() === '' || price.trim() === '' || quantity.trim() === '';
+		return orderId.trim() === '' || cusName.trim() === '' || address.trim() === '' || phoneNo.trim() === '' || orderDescription.trim() === '';
 	}	  
 
 	const handleTakePhoto = async () => {
@@ -34,19 +34,19 @@ const InsertRawMaterial = ({navigation}) => {
 
     const addMaterial = async () => {
 		try {
-			const docRef = await addDoc(collection(FIRESTORE_DB, 'rawmaterials'), {
-				materialId: materialid,
-				materialName: material,
-				supplierName: supplier,
-				materialPrice: price,
-				materialQuantity: quantity,
+			const docRef = await addDoc(collection(FIRESTORE_DB, 'orderDetails'), {
+				orderId: orderId,
+				cusName: cusName,
+				address: address,
+				phoneNo: phoneNo,
+				orderDescription: orderDescription,
 				image: photo
 			});
-			setMaterialid('');
-			setMaterial('');
-			setSupplier('');
-			setPrice('');
-			setQuantity('');
+			setOrderId('');
+			setCusName('');
+			setAddress('');
+			setPhoneNo('');
+			setOrderDescription('');
 			setPhoto(null);
 			console.log('Document written with ID: ', docRef.id);
 		} catch (e) {
@@ -70,7 +70,7 @@ const InsertRawMaterial = ({navigation}) => {
             }}
         >
 		<View style={styles.headerContainer}>
-			<Text style={styles.topic}>Add An Item</Text>
+			<Text style={styles.topic}>Add Order Details</Text>
 		</View>
 		<ScrollView>
 		{/* <View style={styles.container}>
@@ -80,46 +80,45 @@ const InsertRawMaterial = ({navigation}) => {
 			</View>
             </TouchableOpacity>
 		<View> */}
-			<Text style={styles.header}>Material ID</Text>
+			<Text style={styles.header}>Order ID</Text>
 			<TextInput
 				style={styles.input}
-				placeholder="Insert material id"
-				onChangeText={(text) => setMaterialid(text)}
-				value={materialid}
+				placeholder="Insert order id"
+				onChangeText={(text) => setOrderId(text)}
+				value={orderId}
 			/>
 
-			<Text style={styles.header}>Material Name</Text>
+			<Text style={styles.header}>Customer Name</Text>
 			<TextInput
 				style={styles.input}
-				placeholder="Insert material name"
-				onChangeText={(text) => setMaterial(text)}
-				value={material}
+				placeholder="Insert customer name"
+				onChangeText={(text) => setCusName(text)}
+				value={cusName}
 			/>
 
-			<Text style={styles.header}>Supplier Name</Text>
+			<Text style={styles.header}>Address</Text>
 			<TextInput
 				style={styles.input}
-				placeholder="Insert supplier name"
-				onChangeText={(text) => setSupplier(text)}
-				value={supplier}
+				placeholder="Insert Address"
+				onChangeText={(text) => setAddress(text)}
+				value={address}
 			/>
 
-			<Text style={styles.header}>Price</Text>
+			<Text style={styles.header}>Phone No</Text>
 			<TextInput
 				style={styles.input}
-				placeholder="Insert price"
+				placeholder="Insert Phone No"
 				keyboardType="numeric"
-				onChangeText={(text) => setPrice(text)}
-				value={price}
+				onChangeText={(text) => setPhoneNo(text)}
+				value={phoneNo}
 			/>
 
-			<Text style={styles.header}>Quantity</Text>
+			<Text style={styles.header}>Order Description</Text>
 			<TextInput
 				style={styles.input}
-				placeholder="Insert quantity"
-				keyboardType="numeric"
-				onChangeText={(text) => setQuantity(text)}
-				value={quantity}
+				placeholder="Insert Order Description"
+				onChangeText={(text) => setOrderDescription(text)}
+				value={orderDescription}
 			/>	
 
 			<View style={styles.imgBtn}>
@@ -146,7 +145,7 @@ const InsertRawMaterial = ({navigation}) => {
 					onPress={addMaterial} 
 					disabled={isFormNotFilled()}	
 				>
-					<Text style={styles.btn}>Add Material</Text>
+					<Text style={styles.btn}>Add Order</Text>
 				</TouchableOpacity>
 			)}
 		</View>
@@ -250,4 +249,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default InsertRawMaterial
+export default TPInsertOrder

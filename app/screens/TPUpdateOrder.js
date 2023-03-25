@@ -5,29 +5,29 @@ import { FIRESTORE_DB } from '../../firebaseConfig';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const UpdateRawMaterials = ({ navigation, route }) => {
+const TPUpdateOrder = ({ navigation, route }) => {
   const { item } = route.params;
 
-  const [materialId, setMaterialId] = useState(item.materialId);
-  const [materialName, setMaterialName] = useState(item.materialName);
-  const [supplierName, setSupplierName] = useState(item.supplierName);
-  const [materialPrice, setMaterialPrice] = useState(item.materialPrice);
-  const [materialQuantity, setMaterialQuantity] = useState(item.materialQuantity);
+  const [orderId, setOrderId] = useState(item.orderId);
+  const [cusName, setCusName] = useState(item.cusName);
+  const [address, setAddress] = useState(item.address);
+  const [phoneNo, setPhoneNo] = useState(item.phoneNo);
+  const [orderDescription, setOrderDescription] = useState(item.orderDescription);
 
   const updateItem = async () => {
-    const rawRef = doc(FIRESTORE_DB, "rawmaterials", item.id);
+    const rawRef = doc(FIRESTORE_DB, "orderDetails", item.id);
     await updateDoc(rawRef, {
-      materialId,  
-      materialName,
-      materialPrice,
-      materialQuantity,
-      supplierName,
+      orderId,  
+      cusName,
+      address,
+      phoneNo,
+      orderDescription,
     });
   };
 
   const deleteItem = async () => {
     try {
-      const rawRef = doc(FIRESTORE_DB, "rawmaterials", item.id);
+      const rawRef = doc(FIRESTORE_DB, "orderDetails", item.id);
       await deleteDoc(rawRef);
       navigation.navigate('Viewrawmaterials');
     } catch (error) {
@@ -74,45 +74,44 @@ const UpdateRawMaterials = ({ navigation, route }) => {
         >
       <ScrollView >
         <View style={styles.container}>
-          <Text style={styles.topic}>Update Item</Text>
+          <Text style={styles.topic}>Update Order</Text>
         </View>
-        <Text style={styles.header}>Material ID</Text>
+        <Text style={styles.header}>Order ID</Text>
         <TextInput 
         style={styles.input} 
-        value={materialId} 
+        value={orderId} 
         editable={false}
         selectable={false}
-        onChangeText={setMaterialId} 
+        onChangeText={setOrderId} 
         />
 
-        <Text style={styles.header}>Material Name</Text>
+        <Text style={styles.header}>Customer Name</Text>
         <TextInput 
         style={styles.input} 
-        value={materialName} 
-        onChangeText={setMaterialName} 
+        value={cusName} 
+        onChangeText={setCusName} 
         />
 
-        <Text style={styles.header}>Supplier Name</Text>
+        <Text style={styles.header}>Address</Text>
         <TextInput 
         style={styles.input} 
-        value={supplierName} 
-        onChangeText={setSupplierName} 
+        value={address} 
+        onChangeText={setAddress} 
         />
 
-        <Text style={styles.header}>Price</Text>
+        <Text style={styles.header}>Phone No</Text>
         <TextInput 
         style={styles.input} 
-        value={materialPrice} 
+        value={phoneNo} 
         keyboardType="numeric"
-        onChangeText={setMaterialPrice} 
+        onChangeText={setPhoneNo} 
         />
 
-        <Text style={styles.header}>Quantity</Text> 
+        <Text style={styles.header}>Description</Text> 
         <TextInput 
           style={styles.input} 
-          value={materialQuantity} 
-          keyboardType="numeric"
-          onChangeText={setMaterialQuantity} 
+          value={orderDescription} 
+          onChangeText={setOrderDescription} 
         />
 
         <View style={styles.btncontainer}>
@@ -131,7 +130,7 @@ const UpdateRawMaterials = ({ navigation, route }) => {
                 handleDeleteButtonPress();
               }}
           >
-              <Text style={styles.btn}>Delete Item</Text>
+              <Text style={styles.btn}>Delete Order</Text>
           </TouchableOpacity>        
       </View>
       </ScrollView>
@@ -213,4 +212,4 @@ const styles = StyleSheet.create({
   }
   })
 
-  export default UpdateRawMaterials
+  export default TPUpdateOrder
