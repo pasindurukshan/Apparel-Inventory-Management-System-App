@@ -35,6 +35,7 @@ export default function App() {
 
 				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
 				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+
 				<Stack.Screen name="LViewPackings" component={LViewPackings} options={{ headerShown: false }} />
 				<Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} />
 				<Stack.Screen name="LUpdatePackings" component={LUpdatePackings} options={{ headerShown: false }} />
