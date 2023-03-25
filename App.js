@@ -26,12 +26,12 @@ export default function App() {
 		<NavigationContainer>
 			<Stack.Navigator>
 
+				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
+				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
 				<Stack.Screen name="TPVeiwOrder" component={TPVeiwOrder} options={{headerShown: false}}/>
 				<Stack.Screen name="TPUpdateOrder" component={TPUpdateOrder} options={{headerShown: false}}/>
 				<Stack.Screen name="TPInsertOrder" component={TPInsertOrder} options={{headerShown: false}}/>
 			
-				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
-				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
 				<Stack.Screen name="LViewPackings" component={LViewPackings} options={{ headerShown: false }} />
 				<Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} />
 				<Stack.Screen name="LUpdatePackings" component={LUpdatePackings} options={{ headerShown: false }} />
