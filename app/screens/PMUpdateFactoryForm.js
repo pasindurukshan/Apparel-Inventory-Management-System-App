@@ -1,33 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity, Alert, Image } from 'react-native';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
+import { ScrollView } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PMUpdateFactoryForm = ({ navigation, route }) => {
     const { item } = route.params;
 
-    const [productionid, setProductionid] = useState(item.productionid);
-    const [factoryid, setFactoryid] = useState(item.factoryid);
-    const [factoryname, setFactoryname] = useState(item.factoryname);
-    const [materialid1, setMaterialid1] = useState(item.materialid1);
-    const [materialid1qty, setMaterialid1qty] = useState(item.materialid1qty);
+    const [productionId, setProductionid] = useState(item.productionId);
+    const [factoryId, setFactoryid] = useState(item.factoryId);
+    const [factoryName, setFactoryname] = useState(item.factoryName);
+    const [materialId1, setMaterialid1] = useState(item.materialId1);
+    const [materialId1Qty, setMaterialid1qty] = useState(item.materialId1Qty);
 
     const updateItem = async () => {
-        const rawRef = doc(FIRESTORE_DB, "factoryform", item.id);
-        await updateDoc(rawRef, {
-            productionid,
-            factoryid,
-            materialid1,
-            materialid1qty,
-            factoryname,
+        const factoryRef = doc(FIRESTORE_DB, "factoryform", item.id);
+        await updateDoc(factoryRef, {
+            productionId,
+            factoryId,
+            materialId1,
+            materialId1Qty,
+            factoryName,
         });
     };
 
     const deleteItem = async () => {
         try {
-            const rawRef = doc(FIRESTORE_DB, "factoryform", item.id);
-            await deleteDoc(rawRef);
-            navigation.navigate('PMViewFactoryForm');
+            console.log("hello");
+            console.log(item.id);
+            const factoryRef = doc(FIRESTORE_DB, "factoryform", item.id);
+            await deleteDoc(factoryRef);
+            navigation.navigate('PMViewFactoryFormScreen');
         } catch (error) {
             console.error("Error deleting document: ", error);
         }
@@ -46,91 +50,106 @@ const PMUpdateFactoryForm = ({ navigation, route }) => {
                     text: "Delete",
                     onPress: () => {
                         deleteItem()
-                        navigation.navigate('PMViewFactoryForm')
+                        navigation.navigate('PMViewFactoryFormScreen')
                     },
                     style: "destructive"
                 }
             ]
         );
     };
-    // navigation.navigate('PMViewFactoryForm')
+    // navigation.navigate('PMViewFactoryFormScreen')
     return (
 
-        <View style={styles.container}>
-            <Text style={styles.header}>Production ID</Text>
-            <TextInput
-                style={styles.input}
-                value={productionid}
-                editable={false}
-                selectable={false}
-                onChangeText={setProductionid}
-            />
+        <LinearGradient
+            style={styles.background}
+            colors={['black', 'purple']}
 
-            <Text style={styles.header}>Factory ID</Text>
-            <TextInput
-                style={styles.input}
-                value={factoryid}
-                editable={false}
-                selectable={false}
-                onChangeText={setFactoryid}
-            />
+            start={{
+                x: 1.5,
+                y: 0.7
+            }}
 
-            <Text style={styles.header}>Factory Name</Text>
-            <TextInput
-                style={styles.input}
-                value={factoryname}
-                editable={false}
-                selectable={false}
-                onChangeText={setFactoryname}
-            />
+            end={{
+                x: 0,
+                y: 1
+            }}
+        >
+            <ScrollView >
+                <View style={styles.container}>
+                    <Text style={styles.topic}>Update Factory</Text>
+                </View>
+                <Text style={styles.header}>Production ID</Text>
+                <TextInput
+                    style={styles.input}
+                    value={productionId}
+                    editable={false}
+                    selectable={false}
+                    onChangeText={setProductionid}
+                />
 
-            <Text style={styles.header}>Material Id 1</Text>
-            <TextInput
-                style={styles.input}
-                value={materialid1}
-                onChangeText={setMaterialid1}
-            />
+                <Text style={styles.header}>Factory Id</Text>
+                <TextInput
+                    style={styles.input}
+                    value={factoryId}
+                    editable={false}
+                    selectable={false}
+                    onChangeText={setFactoryid}
+                />
 
-            <Text style={styles.header}>Material Id 1 Quantity</Text>
-            <TextInput
-                style={styles.input}
-                value={materialid1qty}
-                keyboardType="numeric"
-                onChangeText={setMaterialid1qty}
-            />
+                <Text style={styles.header}>Factory Name</Text>
+                <TextInput
+                    style={styles.input}
+                    value={factoryName}
+                    editable={false}
+                    selectable={false}
+                    onChangeText={setFactoryname}
+                />
 
-            <View style={styles.btncontainer}>
-                <TouchableOpacity
-                    onPress={() => {
-                        updateItem();
-                        navigation.navigate('PMViewFactoryForm')
-                    }}
-                >
-                    <Text style={styles.btn}>Update</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.btncontainer}>
-                <TouchableOpacity
-                    onPress={() => {
-                        handleDeleteButtonPress();
-                    }}
-                >
-                    <Text style={styles.btn}>Delete Item</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                <Text style={styles.header}>Apparel Type</Text>
+                <TextInput
+                    style={styles.input}
+                    value={materialId1}
+                    onChangeText={setMaterialid1}
+                />
+
+                <Text style={styles.header}>Apparel Quantity</Text>
+                <TextInput
+                    style={styles.input}
+                    value={materialId1Qty}
+                    keyboardType="numeric"
+                    onChangeText={setMaterialid1qty}
+                />
+
+                <View style={styles.btncontainer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            updateItem();
+                            navigation.navigate('PMViewFactoryFormScreen')
+                        }}
+                    >
+                        <Text style={styles.btn}>Update</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.btncontainer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            handleDeleteButtonPress();
+                        }}
+                    >
+                        <Text style={styles.btn}>Delete Factory</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </LinearGradient>
     );
 
 };
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 120,
-        justifyContent: 'center',
-    },
     form: {
         marginVertical: 20,
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     input: {
@@ -149,8 +168,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '80%',
-        backgroundColor: 'purple',
+        backgroundColor: 'black',
         height: 50,
+        borderColor: 'white',
+        borderWidth: 1,
         borderRadius: 10
     },
     btn: {
@@ -170,7 +191,30 @@ const styles = StyleSheet.create({
     header: {
         marginTop: 10,
         marginLeft: 40,
-        fontSize: 20
+        fontSize: 20,
+        color: 'white'
+    },
+    image: {
+        width: 200,
+        height: 200,
+        resizeMode: 'cover',
+        borderRadius: 5,
+    },
+    imgContainer: {
+        alignItems: 'center'
+    },
+    background: {
+        flex: 1,
+        paddingTop: 60,
+    },
+    topic: {
+        marginTop: 10,
+        color: 'white',
+        fontSize: 50,
+    },
+    container: {
+        alignItems: 'center',
+        marginBottom: 20
     }
 })
 
