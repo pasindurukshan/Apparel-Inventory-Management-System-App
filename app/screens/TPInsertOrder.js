@@ -74,7 +74,7 @@ const TPInsertOrder = ({navigation}) => {
 		</View>
 		<ScrollView>
 		{/* <View style={styles.container}>
-			<TouchableOpacity onPress={() => navigation.navigate('Viewrawmaterials')}>
+			<TouchableOpacity onPress={() => navigation.navigate('TPVeiwOrder')}>
 			<View style={styles.button}>
 			<Text style={styles.text} >Back</Text>
 			</View>

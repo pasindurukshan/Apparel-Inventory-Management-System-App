@@ -33,7 +33,7 @@ const TPVeiwOrder = ({navigation}) => {
     const renderRawItem = ({ item }) => (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Updaterawmaterials", { item });
+          navigation.navigate("TPUpdateOrder", { item });
         }}
       >
         <View style={styles.rawItemContainer}>
@@ -102,7 +102,7 @@ const TPVeiwOrder = ({navigation}) => {
             )}
             <TouchableOpacity 
                 style={styles.addButton}
-                onPress={() => navigation.navigate("Addrawmaterials")}
+                onPress={() => navigation.navigate("TPInsertOrder")}
             >
                 <Ionicons name="add-circle-outline" size={70} color="white" />
             </TouchableOpacity>
