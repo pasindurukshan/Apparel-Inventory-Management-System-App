@@ -123,7 +123,7 @@ export default function AuthScreen({navigation}) {
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
-      <Text style={styles.buttonText}>Don't have an account</Text>
+      <Text style={styles.buttonText}>Don't have an account ?</Text>
     </LinearGradient>
   );
 }
