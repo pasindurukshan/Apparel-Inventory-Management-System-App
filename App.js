@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CasanovaLogin from './app/screens/CasanovaLogin';
 import TPInsertOrder from './app/screens/TPInsertOrder';
 import TPUpdateOrder from './app/screens/TPUpdateOrder';
 import TPVeiwOrder from './app/screens/TPVeiwOrder';
@@ -25,6 +26,10 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
+				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
+				<Stack.Screen name="login" component={CasanovaLogin} options={{headerShown: false}}/>
+				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+
 				<Stack.Screen name="PMViewFactoryFormScreen" component={PMViewFactoryForm} options={{ headerShown: false }} />
 				<Stack.Screen name="PMCreateFactoryFormScreen" component={PMCreateFactoryForm} options={{ headerShown: false }} />
 				<Stack.Screen name="PMUpdateFactoryFormScreen" component={PMUpdateFactoryForm} options={{ headerShown: false }} />
@@ -32,9 +37,6 @@ export default function App() {
 				<Stack.Screen name="TPVeiwOrder" component={TPVeiwOrder} options={{ headerShown: false }} />
 				<Stack.Screen name="TPUpdateOrder" component={TPUpdateOrder} options={{ headerShown: false }} />
 				<Stack.Screen name="TPInsertOrder" component={TPInsertOrder} options={{ headerShown: false }} />
-
-				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
-				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
 
 				<Stack.Screen name="LViewPackings" component={LViewPackings} options={{ headerShown: false }} />
 				<Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} />

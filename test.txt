@@ -1,65 +1,87 @@
-import { View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
 import React, { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { getStorage, ref, uploadString } from "firebase/storage";
-import { launchCamera, MediaTypeOptions } from 'react-native-image-picker';
-import { FIRESTORE_DB } from '../../firebaseConfig';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+// import { signIn, signUp } from '../firebase/auth';
+import { FIREBASE_AUTH } from '../../firebaseConfig';
 
-const InsertRawMaterial = ({navigation}) => {
-    const [materialid, setMaterialid] = useState('');
-    const [material, setMaterial] = useState('');
-    const [supplier, setSupplier] = useState('');
-    const [price, setPrice] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [imageUri, setImageUri] = useState(null);
+export default function CasanovaLogin() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-    const isFormNotFilled = () => {
-        return materialid.trim() === '' || material.trim() === '' || supplier.trim() === '' || price.trim() === '' || quantity.trim() === '';
+  const auth = FIREBASE_AUTH;
+
+const handleSignUp = async ()=>{
+    if(email === "" || password === "") {
+        setErrorMessage("Please fill all fields");
+        return;
     }
+    FIREBASE_AUTH(auth,email,password)
+    .then((userCredential)=>{
+        const user = userCredential.user;
+        Alert.alert("Success", "User created Successfully !!",[
+            {
+            text: "OK", 
+            onPress: () => {
+                navigation.push("Login");
+              },
+            },
+        ]);
+    })
+    .catch ((error)=>{
+        const statusCode = error.code;
 
-    const launchImagePicker = () => {
-        const options = {
-            mediaType: MediaTypeOptions.Images,
-            includeBase64: true,
-            maxHeight: 500,
-            maxWidth: 500,
-        };
-        launchCamera(options, response => {
-            if (response.uri) {
-                setImageUri(response.uri);
-            }
-        });
-    };
-
-    const addMaterial = async () => {
-        try {
-            const imageFileName = imageUri ? `${Date.now()}.jpg` : null;
-            const storageRef = getStorage().ref();
-            let imageUrl = null;
-            if (imageFileName) {
-                const imageRef = ref(storageRef, imageFileName);
-                await uploadString(imageRef, imageUri, 'data_url');
-                imageUrl = await imageRef.getDownloadURL();
-            }
-            const docRef = await addDoc(collection(FIRESTORE_DB, 'rawmaterials'), {
-                materialId: materialid,
-                materialName: material,
-                supplierName: supplier,
-                materialPrice: price,
-                materialQuantity: quantity,
-                imageUrl,
-            });
-            setMaterialid('');
-            setMaterial('');
-            setSupplier('');
-            setPrice('');
-            setQuantity('');
-            setImageUri(null);
-            console.log('Document written with ID: ', docRef.id);
-        } catch (e) {
-            console.error('Error adding document: ', e);
+        if (statusCode === "auth/user-not-found") {
+          setErrorMessage("User not found");
+          return;
+        } else if (statusCode === "auth/wrong-password") {
+          setErrorMessage("Wrong password");
+          return;
+        } else if (statusCode === "auth/invalid-email") {
+          setErrorMessage("Invalid email");
+          return;
+        } else if (statusCode === "auth/email-already-in-use") {
+          setErrorMessage("Email already in use");
+          return;
+        } else if (statusCode === "auth/weak-password") {
+          setErrorMessage("Password must be at least 6 characters");
+          return;
+        } else {
+          setErrorMessage("Something went wrong");
+          return;
         }
-    };
+      });
+}
+
+const handleLogin = () => {
+  if (email === "" || password === "") {
+    setErrorMessage("Please fill all the fields");
+    return;
+  }
+  FIREBASE_AUTH(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      setEmail("");
+      setPassword("");
+      navigation.push("Viewrawmaterials");
+    })
+    .catch((error) => {
+      const statusCode = error.code;
+
+      if (statusCode === "auth/user-not-found") {
+        setErrorMessage("User not found");
+        return;
+      } else if (statusCode === "auth/wrong-password") {
+        setErrorMessage("Wrong password");
+        return;
+      } else if (statusCode === "auth/invalid-email") {
+        setErrorMessage("Invalid email");
+        return;
+      } else {
+        setErrorMessage("Something went wrong");
+        return;
+      }
+    });
+};
 
     return (
         <View style={styles.container}>
@@ -86,12 +108,115 @@ const InsertRawMaterial = ({navigation}) => {
                     value={material}
                 />
 
-                <Text style={styles.header}>Supplier Name</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Insert supplier name"
-                    onChangeText={(text) => setSupplier(text)}
-                    value={supplier}
-                />
+      {errorMessage !== "" && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        </View>
+      )}
 
-                <Text style={styles.header}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleSignUp}
+          style={styles.registerButton}
+        >
+          <Text style={styles.registerButtonText}>REGISTER</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+)
+}
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      width: "100%",
+      height: "100%",
+      backgroundColor:"#F0FFFF",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "4%",
+    },
+  
+    textInputContainer: {
+      flex: 2,
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  
+    textInput: {
+      width: "80%",
+      height: 50,
+      borderWidth:1,
+      borderRadius: 10,
+      paddingLeft: 10,
+      marginBottom: "5%",
+    },
+  
+    buttonContainer: {
+      width: "50%",
+      height: "20%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+  
+    loginButton: {
+      width: "55%",
+      height: "20%",
+      backgroundColor: "aqua",
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 1,
+      borderColor: "black",
+      minHeight: 50,
+      marginLeft:-20,
+      marginRight:20
+    },
+  
+    loginButtonText: {
+      color: "black",
+      fontWeight: "bold",
+    },
+  
+    registerButton: {
+      width: "55%",
+      height: "20%",
+      backgroundColor: "white",
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 1,
+      borderColor: "aqua",
+      minHeight: 50,
+      marginLeft:0
+    },
+  
+    registerButtonText: {
+      fontWeight: "bold",
+      color: "black",
+    },
+  
+    errorContainer: {
+      width: "80%",
+      height: 50,
+      backgroundColor: "red",
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  
+    errorText: {
+      color: "white",
+      fontWeight: "bold",
+    },
+  });
