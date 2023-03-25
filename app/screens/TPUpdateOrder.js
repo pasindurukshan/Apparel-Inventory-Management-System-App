@@ -29,7 +29,7 @@ const TPUpdateOrder = ({ navigation, route }) => {
     try {
       const rawRef = doc(FIRESTORE_DB, "orderDetails", item.id);
       await deleteDoc(rawRef);
-      navigation.navigate('Viewrawmaterials');
+      navigation.navigate('TPVeiwOrder');
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
@@ -48,14 +48,14 @@ const TPUpdateOrder = ({ navigation, route }) => {
           text: "Delete",
           onPress: () => {
               deleteItem()
-              navigation.navigate('Viewrawmaterials')
+              navigation.navigate('TPVeiwOrder')
             },
           style: "destructive"
         }
       ]
     );
   };
-  // navigation.navigate('Viewrawmaterials')
+  // navigation.navigate('TPVeiwOrder')
   return (
     
     <LinearGradient
@@ -118,7 +118,7 @@ const TPUpdateOrder = ({ navigation, route }) => {
           <TouchableOpacity
               onPress={() => {
                   updateItem();
-                  navigation.navigate('Viewrawmaterials')
+                  navigation.navigate('TPVeiwOrder')
               }}
           >
               <Text style={styles.btn}>Update</Text>

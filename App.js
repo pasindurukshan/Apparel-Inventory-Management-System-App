@@ -26,9 +26,9 @@ export default function App() {
 		<NavigationContainer>
 			<Stack.Navigator>
 
-				<Stack.Screen name="Viewrawmaterials" component={TPVeiwOrder} options={{headerShown: false}}/>
-				<Stack.Screen name="Updaterawmaterials" component={TPUpdateOrder} options={{headerShown: false}}/>
-				<Stack.Screen name="Addrawmaterials" component={TPInsertOrder} options={{headerShown: false}}/>
+				<Stack.Screen name="TPVeiwOrder" component={TPVeiwOrder} options={{headerShown: false}}/>
+				<Stack.Screen name="TPUpdateOrder" component={TPUpdateOrder} options={{headerShown: false}}/>
+				<Stack.Screen name="TPInsertOrder" component={TPInsertOrder} options={{headerShown: false}}/>
 			
 				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
 				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
