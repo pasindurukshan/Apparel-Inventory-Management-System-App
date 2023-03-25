@@ -109,7 +109,7 @@ const Home = ({ navigation }) => {
                         }}>Raw Materials</Text>
                     </View>
                     <Image
-                        source={require("./images/6.png")}
+                        source={require("./images/rawMaterials.jpg")}
                     />
                 </TouchableOpacity>
             </ScrollView>
