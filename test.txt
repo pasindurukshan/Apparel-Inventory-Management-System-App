@@ -83,20 +83,30 @@ const handleLogin = () => {
     });
 };
 
-return (
-    <View style={styles.container}>
-    <View style={styles.textInputContainer}>
-      <TextInput
-        style={styles.textInput}
-        onChangeText={(text) => setEmail(text)}
-        placeholder="Enter Your Email"
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Enter Your Password"
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry={true}
-      />
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.navigate('TPVeiwOrder')}>
+                <View style={styles.button}>
+                    <Text style={styles.text} >Back</Text>
+                </View>
+            </TouchableOpacity>
+
+            <View>
+                <Text style={styles.header}>Material ID</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Insert material id"
+                    onChangeText={(text) => setMaterialid(text)}
+                    value={materialid}
+                />
+
+                <Text style={styles.header}>Material Name</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Insert material name"
+                    onChangeText={(text) => setMaterial(text)}
+                    value={material}
+                />
 
       {errorMessage !== "" && (
         <View style={styles.errorContainer}>
