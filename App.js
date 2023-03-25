@@ -25,25 +25,23 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
+				<Stack.Screen name="PMViewFactoryFormScreen" component={PMViewFactoryForm} options={{ headerShown: false }} />
+				<Stack.Screen name="PMCreateFactoryFormScreen" component={PMCreateFactoryForm} options={{ headerShown: false }} />
+				<Stack.Screen name="PMUpdateFactoryFormScreen" component={PMUpdateFactoryForm} options={{ headerShown: false }} />
 
-				<Stack.Screen name="TPVeiwOrder" component={TPVeiwOrder} options={{headerShown: false}}/>
-				<Stack.Screen name="TPUpdateOrder" component={TPUpdateOrder} options={{headerShown: false}}/>
-				<Stack.Screen name="TPInsertOrder" component={TPInsertOrder} options={{headerShown: false}}/>
-			
+				<Stack.Screen name="TPVeiwOrder" component={TPVeiwOrder} options={{ headerShown: false }} />
+				<Stack.Screen name="TPUpdateOrder" component={TPUpdateOrder} options={{ headerShown: false }} />
+				<Stack.Screen name="TPInsertOrder" component={TPInsertOrder} options={{ headerShown: false }} />
+
 				<Stack.Screen name="Isloading" component={Isloading} options={{ headerShown: false }} />
 				<Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
 				<Stack.Screen name="LViewPackings" component={LViewPackings} options={{ headerShown: false }} />
 				<Stack.Screen name="LAddNewPacking" component={LAddNewPacking} options={{ headerShown: false }} />
 				<Stack.Screen name="LUpdatePackings" component={LUpdatePackings} options={{ headerShown: false }} />
 
-				<Stack.Screen name="PMUpdateFactoryFormScreen" component={PMUpdateFactoryForm} options={{ headerShown: false }} />
-				<Stack.Screen name="PMViewFactoryFormScreen" component={PMViewFactoryForm} options={{ headerShown: false }} />
-				<Stack.Screen name="PMCreateFactoryFormScreen" component={PMCreateFactoryForm} options={{ headerShown: false }} />
-				
-				<Stack.Screen name="Addrawmaterials" component={InsertRawMaterial} options={{headerShown: false}}/>
-				<Stack.Screen name="Viewrawmaterials" component={ViewRawMaterials} options={{headerShown: false}}/>
-				<Stack.Screen name="Updaterawmaterials" component={UpdateRawMaterials} options={{headerShown: false}}/>
-        
+				<Stack.Screen name="Addrawmaterials" component={InsertRawMaterial} options={{ headerShown: false }} />
+				<Stack.Screen name="Viewrawmaterials" component={ViewRawMaterials} options={{ headerShown: false }} />
+				<Stack.Screen name="Updaterawmaterials" component={UpdateRawMaterials} options={{ headerShown: false }} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

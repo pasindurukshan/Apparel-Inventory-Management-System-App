@@ -1,18 +1,20 @@
-import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, Text, Button, StyleSheet, TextInput, FlatList, TouchableOpacity, ScrollView, SafeAreaView, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { addDoc, collection, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
-import PMCreateFactoryForm from '../screens/PMCreateFactoryForm';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
+import QRCode from 'react-native-qrcode-svg';
 
 
 const PMViewFactoryForm = ({ navigation }) => {
-    const [rawinfo, setrawInfo] = useState([]);
-    const [selectedFactory, setSelectedFactory] = useState(null);
+    const [factoryinfo, setfactoryInfo] = useState([]);
+    const [selectedRaw, setSelectedRaw] = useState(null);
 
     useEffect(() => {
-        const rawRef = collection(FIRESTORE_DB, 'factoryform');
+        const factoryRef = collection(FIRESTORE_DB, 'factoryform');
 
-        const subscriber = onSnapshot(rawRef, {
+        const subscriber = onSnapshot(factoryRef, {
             next: (snapshot) => {
                 const info = [];
                 snapshot.docs.forEach((doc) => {
@@ -22,7 +24,7 @@ const PMViewFactoryForm = ({ navigation }) => {
                     });
                 });
 
-                setrawInfo(info);
+                setfactoryInfo(info);
             }
         });
 
@@ -30,15 +32,29 @@ const PMViewFactoryForm = ({ navigation }) => {
         return () => subscriber();
     }, []);
 
+
     const renderFactoryItem = ({ item }) => (
+
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate("PMUpdateFactoryForm", { item });
+                navigation.navigate("PMUpdateFactoryFormScreen", { item });
             }}
         >
             <View style={styles.factoryItemContainer}>
-                <Text style={styles.listItem}>{item.factoryId}</Text>
-                <Text style={styles.listItem}>{item.factoryname}</Text>
+                <View style={styles.textContainer}>
+                    <Text style={styles.name}>Factory : {item.factoryName}</Text>
+                    <Text style={styles.facname}>{item.productionId}</Text>
+                    <Text style={styles.listItem}>Factory ID : {item.factoryId}</Text>
+                    <Text style={styles.listItem}>Apparel Type : {item.materialId1}</Text>
+                    <Text style={styles.listItem}>Apparel Quantity : {item.materialId1Qty}</Text>
+                </View>
+                <View style={styles.qrCodeContainer}>
+                    
+                    <QRCode
+                        value={JSON.stringify(item.qrCodeValue)}
+                        size={200}
+                    />
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -48,16 +64,16 @@ const PMViewFactoryForm = ({ navigation }) => {
     const renderItemList = ({ item }) => (
         <FlatList
             style={styles.list}
-            data={rawinfo.filter(raw => raw.factoryId === item.factoryId)}
+            data={factoryinfo.filter(factory => factory.factoryName === item.factoryName)}
             renderItem={renderFactoryItem}
-            keyExtractor={(raw) => raw.id}
+            keyExtractor={(factory) => factory.id}
         />
     );
 
-    const groupedFactoryInfo = Object.values(rawinfo.reduce((acc, cur) => {
-        const key = cur.factoryId;
+    const groupedFactoryInfo = Object.values(factoryinfo.reduce((acc, cur) => {
+        const key = cur.factoryName;
         if (!acc[key]) {
-            acc[key] = { factoryId: key };
+            acc[key] = { factoryName: key };
         }
         acc[key].data = [...(acc[key].data || []), cur];
         return acc;
@@ -65,28 +81,47 @@ const PMViewFactoryForm = ({ navigation }) => {
 
 
     return (
-        <SafeAreaView>
-            {rawinfo.length > 0 && (
+        <LinearGradient
+            style={styles.background}
+            colors={['black', 'purple']}
+
+            start={{
+                x: 1.5,
+                y: 0.7
+            }}
+
+            end={{
+                x: 0,
+                y: 1
+            }}
+        >
+            <Text style={styles.topic}>Factory Forms</Text>
+            {factoryinfo.length > 0 && (
                 <ScrollView style={styles.container}>
                     <FlatList
                         data={groupedFactoryInfo}
                         renderItem={renderItemList}
-                        keyExtractor={(item) => item.factoryId}
+                        keyExtractor={(item) => item.factoryName}
                     />
                 </ScrollView>
             )}
-        </SafeAreaView>
+            <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => navigation.navigate("PMCreateFactoryFormScreen")}
+            >
+                <Ionicons name="add-circle-outline" size={70} color="white" />
+            </TouchableOpacity>
+        </LinearGradient>
     )
-
-
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 105,
+        marginTop: 50,
     },
     list: {
-        borderColor: 'black',
+        borderColor: 'white',
+        backgroundColor: '#222849',
         borderWidth: 1,
         margin: 5,
         borderRadius: 10,
@@ -94,7 +129,7 @@ const styles = StyleSheet.create({
     },
     listItem: {
         fontSize: 15,
-        fontWeight: 'bold'
+        color: 'white',
     },
     button: {
         backgroundColor: 'purple',
@@ -104,7 +139,61 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     text: {
-        color: 'white'
+        color: 'black'
+    },
+    image: {
+        width: 100,
+        height: 100,
+        resizeMode: 'cover',
+        marginLeft: 50,
+        borderRadius: 10,
+        borderColor: 'white',
+        borderWidth: 1
+    },
+    qrCodeContainer: {
+        width: 100,
+        height: 100,
+        marginTop: 50,
+        alignItems: 'center',
+    },
+    qrCode: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain',
+    },
+    factoryItemContainer: {
+        flexDirection: 'row'
+    },
+    textContainer: {
+        width: 200,
+        padding: 10,
+    },
+    background: {
+        flex: 1,
+        paddingTop: 60,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    facname: {
+        color: 'white',
+        fontSize: 25,
+        fontWeight: 'bold',
+    },
+    name: {
+        color: 'white',
+        fontSize: 25,
+        fontWeight: 'bold',
+    },
+    topic: {
+        marginTop: 10,
+        color: 'white',
+        fontSize: 50,
+    },
+    addButton: {
+        width: 70,
+        height: 70,
+        marginLeft: 250,
+        marginBottom: 30,
     }
 });
 
