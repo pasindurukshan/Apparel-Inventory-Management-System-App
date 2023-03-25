@@ -9,7 +9,7 @@ const Home = ({ navigation }) => {
             flex: 1
         }}>
             <View style={{
-                backgroundColor: "#000000",
+                backgroundColor: "purple",
                 height: "18%",
                 borderBottomLeftRadius: 20,
                 borderBottomRightRadius: 20,
@@ -28,7 +28,7 @@ const Home = ({ navigation }) => {
                             fontWeight: "bold",
                             paddingTop: 30,
                             textAlign: "center"
-                        }}>CASANOVA .PVTLTD</Text>
+                        }}>CASANOVA .PVT(LTD)</Text>
                     </View>
                 </View>
             </View>
@@ -45,7 +45,7 @@ const Home = ({ navigation }) => {
                     <Text style={{
                         fontWeight: "bold",
                         fontSize: 30,
-                        color: "#585a61"
+                        color: "#000"
                     }}>Home Page</Text>
                 </View>
             </View>
@@ -77,15 +77,15 @@ const Home = ({ navigation }) => {
                         <Text style={{
                             fontWeight: "bold",
                             fontSize: 20,
-                        }}>Title Manager</Text>
+                        }}>Productions</Text>
                     </View>
                     <Image
-                        source={require("./6.png")}
+                        source={require("./images/6.png")}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Detail")}
+                    onPress={() => navigation.navigate("Viewrawmaterials")}
                     style={{
                         height: 236,
                         elevation: 2,
@@ -106,10 +106,10 @@ const Home = ({ navigation }) => {
                         <Text style={{
                             fontSize: 20,
                             fontWeight: "bold"
-                        }}>Title Manager</Text>
+                        }}>Raw Materials</Text>
                     </View>
                     <Image
-                        source={require("./6.png")}
+                        source={require("./images/6.png")}
                     />
                 </TouchableOpacity>
             </ScrollView>
@@ -140,15 +140,15 @@ const Home = ({ navigation }) => {
                         <Text style={{
                             fontWeight: "bold",
                             fontSize: 20
-                        }}>Title Manager</Text>
+                        }}>Transport</Text>
                     </View>
                     <Image
-                        source={require("./6.png")}
+                        source={require("./images/6.png")}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("LPacking")}
+                    onPress={() => navigation.navigate("LViewPackings")}
                     style={{
                         height: 225,
                         elevation: 2,
@@ -167,10 +167,10 @@ const Home = ({ navigation }) => {
                         <Text style={{
                             fontWeight: "bold",
                             fontSize: 20
-                        }}>Packing Manager</Text>
+                        }}>Packings</Text>
                     </View>
                     <Image
-                        source={require("./6.png")}
+                        source={require("./images/packings.jpg")}
                     />
                 </TouchableOpacity>
             </ScrollView>
