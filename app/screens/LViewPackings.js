@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
 const LViewPackings = ({ navigation }) => {
 
@@ -94,6 +95,12 @@ const LViewPackings = ({ navigation }) => {
                             renderItem={renderItemList}
                             keyExtractor={(item) => item.orderID}
                         />
+                        <TouchableOpacity
+                            style={styles.addButton}
+                            onPress={() => navigation.navigate("LAddNewPacking")}
+                        >
+                            <Ionicons name="add-circle-outline" size={70} color="white" />
+                        </TouchableOpacity>
                     </ScrollView>
                 )}
             </View>
@@ -104,6 +111,7 @@ const LViewPackings = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         marginTop: 50,
+        marginBottom: 40
     },
     list: {
         borderColor: 'white',
@@ -156,6 +164,12 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 60,
     },
+    addButton: {
+        width: 70,
+        height: 70,
+        marginLeft: 320,
+        marginBottom: 30,
+    }
 
 });
 
