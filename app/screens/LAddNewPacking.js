@@ -166,9 +166,10 @@ const LAddNewPacking = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 50,
+        marginTop: 20,
         justifyContent: 'center',
-        paddingBottom: 20
+        paddingBottom: 20,
+        
     },
     form: {
         marginVertical: 20,
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 10
     },
     topic: {
         marginTop: 10,

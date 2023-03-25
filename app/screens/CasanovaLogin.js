@@ -16,7 +16,7 @@ export default function AuthScreen({navigation}) {
         const user = userCredential.user;
         setEmail("");
         setPassword("");
-        navigation.push("Viewrawmaterials");
+        navigation.push("Home");
       })
       .catch((error) => {
         const statusCode = error.code;

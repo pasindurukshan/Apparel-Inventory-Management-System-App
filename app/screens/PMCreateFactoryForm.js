@@ -119,9 +119,10 @@ const PMCreateFactoryForm = ({ navigation }) => {
 
                 <View style={styles.btncontainer}>
                     <TouchableOpacity
-                        onPress={
-                            createFactoryForm
-                        }
+                        onPress={() => {
+                            createFactoryForm();
+                            navigation.navigate('PMViewFactoryFormScreen')
+                        }}
                     >
                         <Text style={styles.btn}>Add Factory Form</Text>
                     </TouchableOpacity>
@@ -210,11 +211,12 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         paddingTop: 60,
-        paddingBottom: 30
+        paddingBottom: 30,
     },
     headerContainer: {
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 20,
+        marginTop: 60
     },
     topic: {
         marginTop: 10,

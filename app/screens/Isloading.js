@@ -17,7 +17,7 @@ const Isloading = ({ navigation }) => {
             {showSplash ? (
                 <SplashScreen />
             ) : (
-                navigation.navigate('Home')
+                navigation.navigate('login')
             )}
         </View>
     )

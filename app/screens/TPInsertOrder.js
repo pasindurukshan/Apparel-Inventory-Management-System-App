@@ -142,7 +142,10 @@ const TPInsertOrder = ({navigation}) => {
 		<View style={styles.btncontainer}>
 			{photo && (
 				<TouchableOpacity
-					onPress={addMaterial} 
+					onPress={() => {
+						addMaterial();
+						navigation.navigate('TPVeiwOrder')
+					}} 
 					disabled={isFormNotFilled()}	
 				>
 					<Text style={styles.btn}>Add Order</Text>
@@ -239,9 +242,9 @@ const styles = StyleSheet.create({
     	marginBottom: 20
 	},
 	topic : {
-		marginTop : 10,
+		marginTop : 50,
 		color :'white',
-		fontSize: 50,
+		fontSize: 45,
 	},
 	imgContainer : {
 		alignItems : 'center'

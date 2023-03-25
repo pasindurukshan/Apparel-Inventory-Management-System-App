@@ -56,7 +56,7 @@ const Home = ({ navigation }) => {
                 style={{ height: 250 }}
             >
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Detail")}
+                    onPress={() => navigation.navigate("PMViewFactoryFormScreen")}
                     style={{
                         height: 236,
                         elevation: 2,
